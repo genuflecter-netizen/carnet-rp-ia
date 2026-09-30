@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="fr" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Carnet de pratique RP IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF; --ink:#171B32; --muted:#5E6879; --line:#DFE2E9; --soft:#F4F5F8;
+  --red:#E22019; --teal:#0F7B63; --teal-strong:#0B5E4C; --amber:#B5751A; --navy:#171B32;
+  --teal-soft:#E3F1ED; --red-soft:#FCE8E6; --amber-soft:#FBF1E0;
+  --code-bg:#171B32; --code-ink:#E4E8EF; --code-muted:#A9B1C3;
+  --font:"Atkinson Hyperlegible","Segoe UI",Arial,Helvetica,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,"Courier New",monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121528; --ink:#E8EAF1; --muted:#A9B1C3; --line:#2C3150; --soft:#1A1E36;
+    --red:#FF5A4E; --teal:#3FB396; --teal-strong:#2E8F77; --amber:#E0A450; --navy:#5B6390;
+    --teal-soft:#12352F; --red-soft:#3A1B1D; --amber-soft:#382B15;
+    --code-bg:#0B0E1F; --code-ink:#E4E8EF; --code-muted:#8E97AD;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121528; --ink:#E8EAF1; --muted:#A9B1C3; --line:#2C3150; --soft:#1A1E36;
+  --red:#FF5A4E; --teal:#3FB396; --teal-strong:#2E8F77; --amber:#E0A450; --navy:#5B6390;
+  --teal-soft:#12352F; --red-soft:#3A1B1D; --amber-soft:#382B15;
+  --code-bg:#0B0E1F; --code-ink:#E4E8EF; --code-muted:#8E97AD;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55}
+a{color:var(--teal)}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.1rem}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:.45rem;overflow-x:auto;padding-top:.6rem;padding-bottom:.6rem;scrollbar-width:thin}
+.nav a{flex:0 0 auto;padding:.42rem .85rem;border:1px solid var(--line);border-radius:999px;color:var(--ink);text-decoration:none;font-size:.93rem;white-space:nowrap}
+.nav a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.hero{padding:2.3rem 0 1.2rem}
+.hero h1{font-size:clamp(2.1rem,8vw,3.1rem);line-height:1.04;letter-spacing:-.015em;margin:0 0 .7rem}
+.hero .lead{font-size:1.1rem;margin:0 0 .9rem;max-width:36rem}
+.warn{background:var(--red-soft);border-radius:10px;padding:.65rem .9rem;margin:0 0 1rem;font-size:.97rem}
+.loop{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;margin:1rem 0;padding:0;list-style:none}
+@media (min-width:640px){.loop{grid-template-columns:repeat(4,1fr)}}
+.loop li{border-radius:10px;padding:.6rem .75rem;color:#fff;font-size:.93rem;line-height:1.35}
+.loop li strong{display:block;font-size:1.02rem}
+.loop li:nth-child(1){background:var(--teal)}.loop li:nth-child(2){background:var(--red)}
+.loop li:nth-child(3){background:var(--navy)}.loop li:nth-child(4){background:var(--amber)}
+.spe{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.4rem 0 0}
+.spe span{font-weight:700;margin-right:.2rem}
+.spe button,.tabs button{min-height:46px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;padding:0 .9rem}
+.spe button[aria-pressed="true"],.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+section{padding:2.2rem 0 1.6rem;border-top:1px solid var(--line)}
+.head{display:grid;grid-template-columns:auto 1fr;gap:.85rem;align-items:start;margin-bottom:.4rem}
+.head.plain{grid-template-columns:1fr}
+.num{width:2.6rem;height:2.6rem;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:700;font-size:1.25rem;margin-top:.1rem}
+h2{font-size:1.55rem;line-height:1.2;margin:0}
+h3{font-size:1.06rem;margin:1.3rem 0 .4rem}
+.meta{color:var(--muted);margin:.3rem 0 0;font-size:.98rem}
+.goal{border-left:4px solid var(--teal);padding:.2rem 0 .2rem .8rem;margin:.9rem 0}
+.goal strong{display:block}
+ol.steps{padding-left:1.35rem;margin:.9rem 0}
+ol.steps li{margin:.5rem 0;padding-left:.2rem}
+ol.steps li b{color:var(--teal)}
+ul.plain{padding-left:1.2rem;margin:.4rem 0}
+ul.plain li{margin:.3rem 0}
+figure.block{margin:1rem 0;border-radius:14px;overflow:hidden;background:var(--code-bg);color:var(--code-ink)}
+figure.block.data{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+figure.block figcaption{display:flex;justify-content:space-between;align-items:center;gap:.8rem;padding:.55rem .6rem .45rem 1rem;font-size:.92rem;color:var(--code-muted)}
+figure.block.data figcaption{color:var(--muted)}
+figure.block pre{margin:0;padding:.2rem 1rem 1rem;white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:14.5px;line-height:1.55}
+figure.block.data pre{font-family:var(--font);font-size:16px}
+.src{font-size:.93rem;color:var(--muted);margin:-.4rem 0 1rem}
+button{font-family:var(--font)}
+button.copy{flex:0 0 auto;background:var(--teal);color:#fff;border:0;border-radius:999px;padding:.55rem 1.15rem;font-weight:700;font-size:.95rem;min-height:44px;cursor:pointer}
+button.copy.done{background:var(--teal-strong)}
+button.combo{display:block;width:100%;margin:1rem 0;background:var(--teal);color:#fff;border:0;border-radius:12px;padding:.85rem 1rem;font-weight:700;font-size:1.05rem;min-height:52px;cursor:pointer}
+button.combo.done{background:var(--teal-strong)}
+.tabs{display:flex;gap:.5rem;margin:1.1rem 0 .3rem}
+.tabs button{flex:1}
+.panel-label{font-weight:700;margin:1rem 0 .2rem}
+.js .panel-label{display:none}
+details{border:1.5px solid var(--amber);border-radius:12px;margin:1rem 0;background:var(--paper)}
+details summary{cursor:pointer;padding:.8rem 1rem;font-weight:700}
+details summary small{font-weight:400;color:var(--muted);margin-left:.35rem}
+details .inner{padding:0 1rem .9rem}
+fieldset.log{border:1px solid var(--line);border-radius:12px;padding:.5rem 1rem .8rem;margin:1rem 0}
+fieldset.log legend{font-weight:700;padding:0 .3rem}
+fieldset.log label{display:flex;gap:.7rem;align-items:flex-start;padding:.38rem 0;cursor:pointer}
+fieldset.log input{width:22px;height:22px;margin-top:.12rem;flex:0 0 auto;accent-color:var(--teal)}
+.keep{background:var(--teal-soft);border-radius:12px;padding:.9rem 1rem;margin:1rem 0 0}
+.keep h3{margin:0 0 .25rem}
+.keep p{margin:0}
+.note{background:var(--amber-soft);border-radius:12px;padding:.8rem 1rem;margin:1rem 0;font-size:.97rem}
+textarea{width:100%;min-height:6.5rem;font:inherit;font-size:1rem;line-height:1.5;border:1.5px solid var(--line);border-radius:10px;padding:.7rem .8rem;background:var(--paper);color:var(--ink);resize:vertical}
+textarea.mono{font-family:var(--mono);font-size:14.5px;min-height:11rem}
+.field-label{display:block;font-weight:700;margin:1rem 0 .4rem}
+.row{display:flex;justify-content:flex-end;margin:.5rem 0 0}
+.scale{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0 .3rem}
+.scale label{position:relative}
+.scale input{position:absolute;opacity:0;width:1px;height:1px}
+.scale span{display:grid;place-items:center;min-width:2.55rem;height:2.55rem;border:1.5px solid var(--line);border-radius:9px;font-weight:700;cursor:pointer}
+.scale input:checked+span{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.scale input:focus-visible+span{outline:3px solid var(--amber);outline-offset:2px}
+.compare{color:var(--muted);margin:.3rem 0 0}
+.cols{display:grid;grid-template-columns:1fr;gap:1rem}
+@media (min-width:640px){.cols{grid-template-columns:1fr 1fr}}
+.cols h3{margin-top:.2rem}
+.actions{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.1rem 0 0}
+button.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:.55rem 1.1rem;min-height:44px;font-weight:700;cursor:pointer}
+footer{color:var(--muted);font-size:.92rem;padding:1.6rem 0 3rem;border-top:1px solid var(--line)}
+footer p{margin:.35rem 0}
+.no-js .tabs,.no-js .spe,.no-js button.copy,.no-js button.combo,.no-js .scale,.no-js .actions,.no-js .js-only{display:none}
+[hidden]{display:none!important}
+@media print{.nav,.tabs,.spe,button,.scale,.actions{display:none!important}.panel[hidden]{display:block!important}details{border:1px solid #999}figure.block{background:#fff!important;color:#000!important;border:1px solid #999}figure.block figcaption{color:#333!important}}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Sections du carnet">
+  <div class="wrap">
+    <a href="#accueil">Accueil</a><a href="#test">Test</a><a href="#reglage">Réglage</a><a href="#ex1">1 Article</a><a href="#ex2">2 Interaction</a><a href="#ex3">3 Prise en charge</a><a href="#ex4">4 Patient</a><a href="#transfert">Transfert</a><a href="#reflexes">Réflexes</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<header class="hero">
+  <h1>Carnet de pratique</h1>
+  <p class="lead">IA générative en sénologie et en hématologie. Chaque exercice suit la même boucle ; réussir, ce n’est pas trouver une erreur, c’est pouvoir dire ce que vous avez contrôlé, changé et conservé.</p>
+  <p class="warn">Cas entièrement fictifs. Ce soir, ne collez aucune donnée réelle de patient.</p>
+  <ol class="loop">
+    <li><strong>Produire</strong>une réponse à partir d’un cas ou d’une source</li>
+    <li><strong>Contrôler</strong>un élément précis</li>
+    <li><strong>Relancer</strong>en fonction du contrôle</li>
+    <li><strong>Conserver</strong>la version utile, et dire pourquoi</li>
+  </ol>
+  <div class="spe" role="group" aria-label="Ma spécialité"><span>Ma spécialité :</span><button data-spe="A" aria-pressed="false">Sénologie (cas A)</button><button data-spe="B" aria-pressed="false">Hématologie (cas B)</button></div>
+</header>
+
+<!-- ================================================================ ACCUEIL -->
+<section id="accueil">
+  <div class="head plain"><div><h2>En arrivant</h2><p class="meta">Trois minutes, avant 19h30 : c’est aussi le test de connexion.</p></div></div>
+  <ol class="steps">
+    <li>Ouvrez votre outil habituel (ChatGPT, Claude, Gemini, Le Chat…) et démarrez une nouvelle conversation.</li>
+    <li>Copiez la question ci-dessous et envoyez-la sans la modifier. Gardez la réponse pour 20h45.</li>
+    <li>Choisissez votre spécialité en haut de page et notez votre confiance actuelle.</li>
+  </ol>
+  <figure class="block"><figcaption>Question de l’accueil <button class="copy" data-target="p-q0">Copier</button></figcaption>
+<pre id="p-q0">Qui a reçu le prix Nobel de physiologie ou médecine le plus récent, et pour quelle découverte ? Réponds en une phrase.</pre></figure>
+  <span class="field-label" id="lab-conf-start">Ma confiance à l’accueil, de 0 à 10</span>
+  <div class="scale" data-key="conf-start" role="radiogroup" aria-labelledby="lab-conf-start"></div>
+</section>
+
+<!-- ================================================================ TEST COMMUN -->
+<section id="test">
+  <div class="head plain"><div><h2>Test commun : même question, réponses différentes ?</h2><p class="meta">6 min. Réflexe : juger une réponse sur ce qu’on peut ouvrir, pas sur ce que le modèle dit de lui-même.</p></div></div>
+  <p class="goal"><strong>À obtenir</strong>Une réponse dont vous avez vous-même ouvert la source.</p>
+  <ol class="steps">
+    <li><b>Produire.</b> Reprenez votre réponse de l’accueil (ou envoyez la question maintenant).</li>
+    <li><b>Contrôler.</b> Regardez l’interface : une recherche web a-t-elle eu lieu ? Des sources sont-elles affichées ?</li>
+    <li><b>Relancer.</b> Dans la même conversation, envoyez la relance ci-dessous.</li>
+    <li><b>Conserver.</b> Ouvrez le lien : confirme-t-il la réponse ? Cochez votre relevé.</li>
+  </ol>
+  <figure class="block"><figcaption>Relance <button class="copy" data-target="p-t1">Copier</button></figcaption>
+<pre id="p-t1">Donne la source exacte de ta réponse, avec le lien.</pre></figure>
+  <p class="note">Ce que le modèle affirme sur sa date de connaissances ou sur sa recherche n’est pas une preuve : fiez-vous aux traces visibles dans l’interface et aux sources que vous ouvrez.</p>
+  <fieldset class="log" data-title="Test commun"><legend>Mon relevé</legend>
+    <label><input type="checkbox" data-key="t-web"> Une recherche web est visible dans l’interface</label>
+    <label><input type="checkbox" data-key="t-sources"> Des sources sont affichées</label>
+    <label><input type="checkbox" data-key="t-ok"> La source ouverte confirme la réponse</label>
+  </fieldset>
+  <div class="keep"><h3>À retenir</h3><p>Une affirmation factuelle sans source vérifiée reste à contrôler. Les principes de contrôle sont communs à tous les outils ; leurs capacités et leurs erreurs varient.</p></div>
+</section>
+
+<!-- ================================================================ RÉGLAGE -->
+<section id="reglage">
+  <div class="head plain"><div><h2>Réglez votre outil maintenant</h2><p class="meta">4 min. Vous l’utiliserez pendant tous les exercices, et vous repartirez avec.</p></div></div>
+  <ol class="steps">
+    <li>Ouvrez les réglages de personnalisation de votre outil : instructions personnalisées dans ChatGPT, préférences du profil dans Claude.</li>
+    <li>Collez l’instruction ci-dessous et enregistrez.</li>
+    <li>Ouvrez une nouvelle conversation : le réglage s’applique aux conversations suivantes.</li>
+  </ol>
+  <figure class="block"><figcaption>Instruction à coller <button class="copy" data-target="p-instr">Copier</button></figcaption>
+<pre id="p-instr">Quand je te pose une question médicale :
+- distingue ce qui vient d’une source consultée et ce qui vient de tes connaissances générales ;
+- donne la source et sa date quand tu en as une, sinon écris « non vérifié » ;
+- signale ce qui manque pour répondre et ton degré d’incertitude ;
+- n’invente ni référence, ni dose, ni chiffre ;
+- termine par les points à contrôler avant utilisation ;
+- si je conteste ta réponse, réexamine-la à partir des données disponibles, justifie toute correction et signale ce qui reste incertain.</pre></figure>
+  <p class="note">Sans compte, les réglages ne sont pas disponibles : collez cette instruction au début de chaque nouvelle conversation.</p>
+</section>
+
+<!-- ================================================================ EXERCICE 1 -->
+<section id="ex1">
+  <div class="head"><span class="num">1</span><div><h2>Exploiter un article</h2><p class="meta">13 min. Réflexe : partir de l’article source, puis rattacher chaque chiffre et chaque actualisation à une référence vérifiable.</p></div></div>
+  <p class="goal"><strong>À obtenir</strong>Une analyse critique de l’essai et une slide dont chaque chiffre et chaque actualisation renvoient à une référence vérifiable.</p>
+  <ol class="steps">
+    <li><b>Produire.</b> Nouvelle conversation, recherche web activée si votre outil le propose. Copiez « prompt + article » et envoyez.</li>
+    <li><b>Contrôler.</b> Comparez les chiffres du résumé à ceux du résumé PubMed, vérifiez que chaque actualisation citée existe (revue ou congrès, année), relisez l’applicabilité en France.</li>
+    <li><b>Relancer.</b> Envoyez la relance « références ». Sur téléphone, si le fichier ne s’ouvre pas, demandez le contenu de la slide.</li>
+    <li><b>Conserver.</b> Gardez la slide corrigée et notez ce que vous avez changé.</li>
+  </ol>
+
+  <div class="tabs" role="tablist" data-group="ex1"><button role="tab" data-tab="A">A : MONARCH 3</button><button role="tab" data-tab="B">B : CLL14</button></div>
+  <button class="combo" data-group="ex1" data-prompt-a="p-ex1a" data-prompt-b="p-ex1b" data-slot="[LIEN PUBMED]" data-case-a="a-ex1a" data-case-b="a-ex1b">Copier prompt + article</button>
+
+  <p class="panel-label">Sénologie (cas A)</p>
+  <div class="panel" data-group="ex1" data-panel="A">
+    <figure class="block"><figcaption>Prompt A <button class="copy" data-target="p-ex1a">Copier seul</button></figcaption>
+<pre id="p-ex1a">Tu es oncologue et tu prépares un staff.
+À partir de l’article ci-dessous, rédige :
+- un résumé en 6 lignes (population, bras comparés, critère principal, survie globale si disponible…) ;
+- les forces et les limites de l’essai ;
+- les biais possibles ;
+- l’applicabilité en France (AMM, remboursement, accès précoce) ;
+- la prise en compte des actualisations publiées ou présentées en congrès après la 1re publication.
+Résume ensuite ta réponse en une slide PowerPoint.
+Article : [LIEN PUBMED]</pre></figure>
+    <figure class="block data"><figcaption>Article A <button class="copy" data-target="a-ex1a">Copier seul</button></figcaption>
+<pre id="a-ex1a">https://pubmed.ncbi.nlm.nih.gov/28968163/ (Goetz MP et al. MONARCH 3: Abemaciclib As Initial Therapy for Advanced Breast Cancer. J Clin Oncol 2017;35(32):3638-3646)</pre></figure>
+  </div>
+  <p class="panel-label">Hématologie (cas B)</p>
+  <div class="panel" data-group="ex1" data-panel="B">
+    <figure class="block"><figcaption>Prompt B <button class="copy" data-target="p-ex1b">Copier seul</button></figcaption>
+<pre id="p-ex1b">Tu es hématologue et tu prépares un staff.
+À partir de l’article ci-dessous, rédige :
+- un résumé en 6 lignes (population, bras comparés, critère principal, survie globale si disponible…) ;
+- les forces et les limites de l’essai ;
+- les biais possibles ;
+- l’applicabilité en France (AMM, remboursement, accès précoce) ;
+- la prise en compte des actualisations publiées ou présentées en congrès après la 1re publication.
+Résume ensuite ta réponse en une slide PowerPoint.
+Article : [LIEN PUBMED]</pre></figure>
+    <figure class="block data"><figcaption>Article B <button class="copy" data-target="a-ex1b">Copier seul</button></figcaption>
+<pre id="a-ex1b">https://pubmed.ncbi.nlm.nih.gov/31166681/ (Fischer K et al. Venetoclax and Obinutuzumab in Patients with CLL and Coexisting Conditions. N Engl J Med 2019;380(23):2225-2236)</pre></figure>
+  </div>
+
+  <figure class="block"><figcaption>Relance « références » <button class="copy" data-target="p-ex1r">Copier</button></figcaption>
+<pre id="p-ex1r">Pour chaque chiffre et chaque actualisation citée, donne la référence exacte (revue ou congrès, année) et le lien. Signale clairement ce que tu n’as pas pu vérifier.</pre></figure>
+  <figure class="block"><figcaption>Relance « France » <button class="copy" data-target="p-ex1f">Copier</button></figcaption>
+<pre id="p-ex1f">Pour l’applicabilité en France, indique la source consultée (RCP, avis de la HAS, base de données publique des médicaments) et sa date. Sinon, écris « non vérifié ».</pre></figure>
+  <figure class="block"><figcaption>Sur téléphone, si le fichier ne s’ouvre pas <button class="copy" data-target="p-ex1t">Copier</button></figcaption>
+<pre id="p-ex1t">Donne le contenu de la slide prêt à coller.</pre></figure>
+
+  <details><summary>Éléments de correction <small>après votre propre contrôle</small></summary><div class="inner">
+    <p class="panel-label">Cas A</p>
+    <div class="panel" data-group="ex1" data-panel="A">
+      <ul class="plain">
+        <li>1re publication (J Clin Oncol 2017, analyse intermédiaire) : 493 patientes ménopausées, sans traitement systémique antérieur au stade avancé ; survie sans progression, médiane non atteinte contre 14,7 mois, HR 0,54 (IC 95 % 0,41-0,72) ; réponse objective chez les patientes avec maladie mesurable 59 % contre 44 %.</li>
+        <li>Actualisations : survie sans progression finale 28,18 contre 14,76 mois (HR 0,540). Survie globale finale (Goetz MP et al., Ann Oncol 2024;35:718-727) : 66,81 contre 53,72 mois, HR 0,804 (0,637-1,015), non statistiquement significative. Le HR 0,754 vient d’une analyse intermédiaire.</li>
+        <li>Forces et biais : double aveugle contre placebo ; survie sans progression évaluée par l’investigateur, concordante en revue indépendante ; survie globale en critère secondaire.</li>
+        <li>France : AMM européenne dans cette indication. Remboursement et conditions à vérifier dans la base de données publique des médicaments et les avis de la HAS ; le modèle ne doit pas l’affirmer sans source.</li>
+      </ul>
+    </div>
+    <p class="panel-label">Cas B</p>
+    <div class="panel" data-group="ex1" data-panel="B">
+      <ul class="plain">
+        <li>1re publication (N Engl J Med 2019) : 432 patients avec comorbidités, âge médian 72 ans ; survie sans progression HR 0,35 (IC 95 % 0,23-0,53), médianes non atteintes ; mortalité 9,3 % contre 7,9 %, différence non significative.</li>
+        <li>Actualisation : suivi à 6 ans (présenté à l’EHA 2023, publié par Al-Sawaf O et al., Blood 2024;144:1924-1935) : survie sans progression médiane 76,2 contre 36,4 mois, HR 0,40 (0,31-0,52) ; 53,1 % contre 21,7 % à 6 ans.</li>
+        <li>Forces et biais : phase 3, durée fixe de 12 cycles, maladie résiduelle mesurée ; essai ouvert, survie sans progression évaluée par l’investigateur, comparateur chlorambucil-obinutuzumab qui n’est plus le standard.</li>
+        <li>France : AMM européenne dans cette indication. Remboursement à vérifier dans la base de données publique des médicaments et les avis de la HAS.</li>
+      </ul>
+    </div>
+    <p>Pièges fréquents à chercher : une actualisation inventée ou mal datée, une analyse intermédiaire présentée comme finale, un statut de remboursement affirmé sans source, une slide qui annonce un gain de survie globale.</p>
+  </div></details>
+  <fieldset class="log" data-title="Exercice 1, exploiter un article"><legend>Mon relevé</legend>
+    <label><input type="checkbox" data-key="e1-pubmed"> Les chiffres du résumé sont conformes au résumé PubMed</label>
+    <label><input type="checkbox" data-key="e1-actu"> Une actualisation citée est introuvable ou mal datée</label>
+    <label><input type="checkbox" data-key="e1-france"> Le statut français est affirmé sans source</label>
+    <label><input type="checkbox" data-key="e1-pptx"> J’ai obtenu la slide .pptx</label>
+  </fieldset>
+  <label class="field-label" for="ex1-bilan">Ce que j’ai contrôlé, changé et conservé</label>
+  <textarea id="ex1-bilan" data-key="ex1-bilan" placeholder="J’ai contrôlé : …&#10;J’ai changé : …&#10;Je conserve cette version parce que : …"></textarea>
+  <div class="keep"><h3>À retenir</h3><p>Le modèle résume un article et structure une analyse critique en une minute, avec une slide exploitable. Il peut aussi inventer ou mal dater une actualisation, et affirmer un statut français sans source. Un chiffre dont on ne retrouve pas la référence ne va pas sur la slide.</p></div>
+</section>
+
+<!-- ================================================================ EXERCICE 2 -->
+<section id="ex2">
+  <div class="head"><span class="num">2</span><div><h2>Vérifier une interaction</h2><p class="meta">14 min. Réflexe : commencer par les interactions majeures, les faire justifier, puis les classer vérifiées, fausses ou non vérifiées.</p></div></div>
+  <p class="goal"><strong>À obtenir</strong>Une interaction majeure que vous avez vous-même vérifiée et corrigée, avec sa source.</p>
+  <ol class="steps">
+    <li><b>Produire.</b> Nouvelle conversation. Copiez « prompt + cas » et envoyez.</li>
+    <li><b>Contrôler.</b> Choisissez une ligne classée majeure (à défaut, la plus grave) et cherchez-la dans le RCP (liens plus bas).</li>
+    <li><b>Relancer.</b> Contestez cette ligne, observez la réaction, puis demandez la justification.</li>
+    <li><b>Conserver.</b> Corrigez la ligne : vérifiée, fausse ou non vérifiée, avec la source.</li>
+  </ol>
+
+  <div class="tabs" role="tablist" data-group="ex2"><button role="tab" data-tab="A">A : sénologie</button><button role="tab" data-tab="B">B : hématologie</button></div>
+  <button class="combo" data-prompt="p-ex2" data-group="ex2" data-slot="[COLLER ICI]" data-case-a="c-ex2a" data-case-b="c-ex2b">Copier prompt + cas</button>
+
+  <figure class="block"><figcaption>Prompt <button class="copy" data-target="p-ex2">Copier seul</button></figcaption>
+<pre id="p-ex2">Agis comme un pharmacologue clinicien.
+Je te donne un cas avec sa liste de traitements.
+Tâches :
+1) Dresse la liste des interactions cliniquement pertinentes (niveau : majeur / modéré / faible) avec le traitement anticancéreux du cas.
+2) Explique le mécanisme (CYP, QT, P-gp, transporteurs…).
+3) Propose une conduite à tenir (surveillance, ajustement…) et impérativement une ou des molécules alternatives si l’association est contre-indiquée, déconseillée ou à éviter.
+4) Cite les sources à vérifier (RCP EMA, FDA, UpToDate, Micromedex, Lexicomp, DrugBank…).
+Règles :
+- Si tu n’es pas sûr, dis-le et propose une stratégie de vérification.
+- Ne propose aucune posologie inventée.
+- Rends ton résultat sous forme de tableau.
+Cas : [COLLER ICI]</pre></figure>
+
+  <p class="panel-label">Cas A (sénologie)</p>
+  <div class="panel" data-group="ex2" data-panel="A">
+    <figure class="block data"><figcaption>Cas A <button class="copy" data-target="c-ex2a">Copier seul</button></figcaption>
+<pre id="c-ex2a">Cancer du sein RH+, HER2 faible, métastatique. Traitement par abémaciclib 150 mg matin et soir en continu + létrozole.
+Traitement habituel : metformine, atorvastatine, ézétimibe, irbésartan, hydrochlorothiazide, apixaban, vérapamil, ésoméprazole.</pre></figure>
+  </div>
+  <p class="panel-label">Cas B (hématologie)</p>
+  <div class="panel" data-group="ex2" data-panel="B">
+    <figure class="block data"><figcaption>Cas B <button class="copy" data-target="c-ex2b">Copier seul</button></figcaption>
+<pre id="c-ex2b">Leucémie lymphoïde chronique traitée en première ligne par vénétoclax + obinutuzumab ; titration du vénétoclax débutée cette semaine.
+Traitement habituel : metformine, atorvastatine, ézétimibe, irbésartan, diltiazem, digoxine, ésoméprazole.</pre></figure>
+  </div>
+
+  <figure class="block"><figcaption>Relance « contestation » <button class="copy" data-target="p-ex2p">Copier</button></figcaption>
+<pre id="p-ex2p">Es-tu sûr pour la ligne [MÉDICAMENT] ? Mon pharmacien estime qu’elle ne pose aucun problème.</pre></figure>
+  <figure class="block"><figcaption>Relance « justification » <button class="copy" data-target="p-ex2s">Copier</button></figcaption>
+<pre id="p-ex2s">Pour la ligne [MÉDICAMENT], cite le passage du RCP qui la justifie, avec la rubrique et l’autorité (EMA, FDA ou autre). Si tu ne le trouves pas, classe-la comme non vérifiée, explique ce qui manque et indique comment la contrôler.</pre></figure>
+  <p class="src">RCP européens complets : <a href="https://www.ema.europa.eu/en/documents/product-information/verzenios-epar-product-information_en.pdf" target="_blank" rel="noopener">Verzenios</a>, <a href="https://www.ema.europa.eu/en/documents/product-information/venclyxto-epar-product-information_en.pdf" target="_blank" rel="noopener">Venclyxto</a>, <a href="https://www.ema.europa.eu/en/documents/product-information/gazyvaro-epar-product-information_en.pdf" target="_blank" rel="noopener">Gazyvaro</a> (rubrique 4.5 pour les interactions).</p>
+
+  <details><summary>Éléments de correction <small>après votre propre contrôle</small></summary><div class="inner">
+    <p class="panel-label">Cas A</p>
+    <div class="panel" data-group="ex2" data-panel="A">
+      <ul class="plain">
+        <li>Vérapamil : inhibiteur modéré du CYP3A4. Le RCP européen de l’abémaciclib ne prévoit pas d’adaptation de dose avec un inhibiteur modéré, mais une surveillance étroite des signes de toxicité (4.5). D’autres notices (Australie, Nouvelle-Zélande) proposent 100 mg deux fois par jour avec le vérapamil : vérifier de quelle autorité vient la recommandation citée.</li>
+        <li>Vigilance clinique : la diarrhée, effet indésirable le plus fréquent, avec diurétique, irbésartan et metformine (déshydratation, insuffisance rénale). RCP 4.4 : lopéramide dès les premières selles molles, boire, prévenir l’équipe.</li>
+        <li>Créatinine : hausse par inhibition de sa sécrétion tubulaire, sans baisse de la filtration glomérulaire (4.5, 4.8).</li>
+        <li>Transporteurs P-gp et BCRP : le RCP donne la digoxine et le dabigatran comme exemples, pas l’apixaban : non vérifié par ce RCP, à documenter ailleurs.</li>
+        <li>Ésoméprazole, atorvastatine : pas de passage retrouvé dans le RCP de l’abémaciclib, donc alertes non vérifiées. Vérapamil et atorvastatine : interaction entre comédications (CYP3A4), à vérifier par ailleurs.</li>
+      </ul>
+    </div>
+    <p class="panel-label">Cas B</p>
+    <div class="panel" data-group="ex2" data-panel="B">
+      <ul class="plain">
+        <li>Diltiazem : inhibiteur modéré du CYP3A cité au RCP. Dans la LLC, à éviter à l’initiation et pendant la titration ; à défaut, dose de vénétoclax réduite d’au moins 50 % (4.2, tableau 7 ; 4.5).</li>
+        <li>Digoxine : substrat de la P-gp à marge thérapeutique étroite, association à éviter, sinon prudence (4.5).</li>
+        <li>Statines : surveiller la toxicité (4.5).</li>
+        <li>Ésoméprazole : le RCP indique que les antisécrétoires n’affectent pas la biodisponibilité du vénétoclax. Ici, l’alerte est vérifiée comme fausse.</li>
+        <li>Obinutuzumab : envisager de suspendre les antihypertenseurs 12 h avant, pendant et 1 h après chaque perfusion (RCP Gazyvaro 4.2).</li>
+      </ul>
+    </div>
+  </div></details>
+  <fieldset class="log" data-title="Exercice 2, vérifier une interaction"><legend>Mon relevé</legend>
+    <label><input type="checkbox" data-key="e2-majeure"> J’ai vérifié une interaction majeure dans le RCP</label>
+    <label><input type="checkbox" data-key="e2-autorite"> La recommandation citée venait d’une autre autorité que l’EMA</label>
+    <label><input type="checkbox" data-key="e2-pression"> Le modèle a changé d’avis sans argument nouveau</label>
+    <label><input type="checkbox" data-key="e2-nv"> J’ai classé une ligne « non vérifiée »</label>
+  </fieldset>
+  <label class="field-label" for="ex2-bilan">Ce que j’ai contrôlé, changé et conservé</label>
+  <textarea id="ex2-bilan" data-key="ex2-bilan" placeholder="J’ai contrôlé : …&#10;J’ai changé : …&#10;Je conserve cette version parce que : …"></textarea>
+  <div class="keep"><h3>À retenir</h3><p>Le modèle connaît beaucoup d’interactions, en ajoute et en oublie, et mélange parfois les notices de différentes autorités. Contesté, il peut changer d’avis sans nouvel argument : c’est une observation, pas une preuve. La source tranche, et ne pas retrouver une interaction ne prouve pas son absence.</p></div>
+</section>
+
+<!-- ================================================================ EXERCICE 3 -->
+<section id="ex3">
+  <div class="head"><span class="num">3</span><div><h2>Proposition de prise en charge thérapeutique</h2><p class="meta">12 min. Réflexe : vérifier l’indication européenne de l’option retenue et faire lister ce qui manque pour décider.</p></div></div>
+  <p class="goal"><strong>À obtenir</strong>Une option vérifiée dans le RCP (indication européenne), et la donnée qui manque pour décider.</p>
+  <ol class="steps">
+    <li><b>Produire.</b> Nouvelle conversation. Copiez « prompt + cas » et envoyez : vous obtenez un tableau des options par ligne.</li>
+    <li><b>Contrôler.</b> Pour l’option A : l’indication européenne correspond-elle au cas ? Une AMM ou un remboursement sont-ils affirmés sans source ? Les données manquantes sont-elles signalées ?</li>
+    <li><b>Relancer.</b> Envoyez la relance « manquants », puis la relance « indication ».</li>
+    <li><b>Conserver.</b> Gardez une option vérifiée et la question à poser au dossier.</li>
+  </ol>
+
+  <div class="tabs" role="tablist" data-group="ex3"><button role="tab" data-tab="A">A : sénologie</button><button role="tab" data-tab="B">B : hématologie</button></div>
+  <button class="combo" data-group="ex3" data-prompt-a="p-ex3a" data-prompt-b="p-ex3b" data-slot="[COLLER ICI]" data-case-a="c-ex3a" data-case-b="c-ex3b">Copier prompt + cas</button>
+
+  <p class="panel-label">Sénologie (cas A)</p>
+  <div class="panel" data-group="ex3" data-panel="A">
+    <figure class="block"><figcaption>Prompt A <button class="copy" data-target="p-ex3a">Copier seul</button></figcaption>
+<pre id="p-ex3a">Tu es oncologue sénologue.
+À partir de ce cas anonymisé, propose un *tableau* des options thérapeutiques par ligne :
+- A : option standard (concordante référentiels)
+- B : alternative si contre-indication
+- C : prérequis / points à vérifier
+- D : toxicités principales + surveillance
+Contraintes :
+- N’invente aucune AMM. Adapte-toi aux médicaments remboursés en France ou disponibles en accès précoce.
+- Si tu cites une recommandation, indique la source à vérifier (NCCN / ESMO / ASCO, RCP EMA / ANSM, etc).
+- Termine par "Ce que je ne sais pas / incertitudes".
+Cas : [COLLER ICI]</pre></figure>
+    <figure class="block data"><figcaption>Cas A <button class="copy" data-target="c-ex3a">Copier seul</button></figcaption>
+<pre id="c-ex3a">Patiente de 55 ans. Récidive osseuse d’un cancer du sein RH+/HER2 1+ sous létrozole adjuvant depuis 2 ans, lésion du rachis menaçante en T11 au TEP.</pre></figure>
+  </div>
+  <p class="panel-label">Hématologie (cas B)</p>
+  <div class="panel" data-group="ex3" data-panel="B">
+    <figure class="block"><figcaption>Prompt B <button class="copy" data-target="p-ex3b">Copier seul</button></figcaption>
+<pre id="p-ex3b">Tu es hématologue.
+À partir de ce cas anonymisé, propose un *tableau* des options thérapeutiques par ligne :
+- A : option standard (concordante référentiels)
+- B : alternative si contre-indication
+- C : prérequis / points à vérifier
+- D : toxicités principales + surveillance
+Contraintes :
+- N’invente aucune AMM. Adapte-toi aux médicaments remboursés en France ou disponibles en accès précoce.
+- Si tu cites une recommandation, indique la source à vérifier (NCCN / ESMO / ASCO, RCP EMA / ANSM, etc).
+- Termine par "Ce que je ne sais pas / incertitudes".
+Cas : [COLLER ICI]</pre></figure>
+    <figure class="block data"><figcaption>Cas B <button class="copy" data-target="c-ex3b">Copier seul</button></figcaption>
+<pre id="c-ex3b">Patient de 76 ans, LAM nouvellement diagnostiquée, avec 42 % de blastes médullaires. OMS 2, BPCO sévère ; inéligibilité à une chimiothérapie intensive retenue après évaluation hématologique. DFG estimé : 45 mL/min/1,73 m². Hb : 8,2 g/dL ; plaquettes : 45 G/L ; PNN : 0,6 G/L. Patient afébrile, sans infection documentée. Mutation IDH1 R132C ; FLT3 non muté. Caryotype et reste du bilan moléculaire en attente.</pre></figure>
+  </div>
+
+  <figure class="block"><figcaption>Relance « manquants » <button class="copy" data-target="p-ex3m">Copier</button></figcaption>
+<pre id="p-ex3m">Quelles informations manquent au dossier pour choisir entre ces options ? Classe-les selon leur impact sur la décision.</pre></figure>
+  <figure class="block"><figcaption>Relance « indication » <button class="copy" data-target="p-ex3i">Copier</button></figcaption>
+<pre id="p-ex3i">Pour l’option A, cite l’essai pivot et l’indication européenne exacte (RCP, rubrique 4.1). Si tu ne peux pas la vérifier, écris « non vérifié ».</pre></figure>
+  <p class="panel-label">Bonus, cas A</p>
+  <div class="panel" data-group="ex3" data-panel="A">
+    <figure class="block"><figcaption>Bonus : une donnée nouvelle <button class="copy" data-target="p-ex3ba">Copier</button></figcaption>
+<pre id="p-ex3ba">La patiente a reçu un inhibiteur de CDK4/6 en adjuvant, arrêté il y a 8 mois. Ton option A change-t-elle ?</pre></figure>
+  </div>
+  <p class="panel-label">Bonus, cas B</p>
+  <div class="panel" data-group="ex3" data-panel="B">
+    <figure class="block"><figcaption>Bonus : une donnée nouvelle <button class="copy" data-target="p-ex3bb">Copier</button></figcaption>
+<pre id="p-ex3bb">Le caryotype révèle une mutation TP53. Ton option A change-t-elle ?</pre></figure>
+  </div>
+
+  <details><summary>Éléments de correction <small>après votre propre contrôle</small></summary><div class="inner">
+    <p class="panel-label">Cas A</p>
+    <div class="panel" data-group="ex3" data-panel="A">
+      <ul class="plain">
+        <li>La lésion T11 menaçante passe avant la ligne systémique : examen neurologique, IRM, avis de radiothérapie et de chirurgie ; traitement anti-résorptif après bilan dentaire.</li>
+        <li>Rechute sous létrozole : proposer un inhibiteur de l’aromatase avec un inhibiteur de CDK4/6 est un piège ; les options reposent sur un autre partenaire hormonal (fulvestrant).</li>
+        <li>« Depuis 2 ans » tombe sur la frontière de la résistance hormonale primaire ; un inhibiteur de CDK4/6 en adjuvant est une donnée décisive.</li>
+        <li>Données à obtenir : biopsie de la récidive (RH, HER2), PIK3CA, ESR1, BRCA. Si PIK3CA muté, l’indication européenne de l’inavolisib est soumise à des conditions de délai.</li>
+        <li>Tout « remboursé en France » ou « accès précoce » se vérifie à la source (base de données publique des médicaments, HAS).</li>
+      </ul>
+    </div>
+    <p class="panel-label">Cas B</p>
+    <div class="panel" data-group="ex3" data-panel="B">
+      <ul class="plain">
+        <li>Deux options autorisées en Europe : azacitidine + vénétoclax, ou azacitidine + ivosidénib (mutation IDH1 R132).</li>
+        <li>L’ivosidénib seul est autorisé dans cette situation hors d’Europe, pas en Europe ; l’énasidénib cible IDH2.</li>
+        <li>Prérequis : caryotype et bilan moléculaire (TP53…), leucocytes (moins de 25 G/L exigés avant le vénétoclax), ECG (QTc sous ivosidénib), objectifs du patient.</li>
+        <li>DFG à 45 : prévention du syndrome de lyse renforcée. Prophylaxie par azolés : interactions à gérer avec les deux options.</li>
+      </ul>
+    </div>
+  </div></details>
+  <fieldset class="log" data-title="Exercice 3, proposition de prise en charge"><legend>Mon relevé</legend>
+    <label><input type="checkbox" data-key="e3-ue"> L’option A correspond à une indication européenne vérifiée</label>
+    <label><input type="checkbox" data-key="e3-amm"> Une AMM ou un remboursement affirmés sans source</label>
+    <label><input type="checkbox" data-key="e3-manque"> Une donnée manquante décisive signalée</label>
+    <label><input type="checkbox" data-key="e3-bonus"> Le bonus a changé l’option A</label>
+  </fieldset>
+  <label class="field-label" for="ex3-bilan">Ce que j’ai contrôlé, changé et conservé</label>
+  <textarea id="ex3-bilan" data-key="ex3-bilan" placeholder="J’ai contrôlé : …&#10;J’ai changé : …&#10;Je conserve cette version parce que : …"></textarea>
+  <div class="keep"><h3>À retenir</h3><p>Le modèle structure vite un tableau d’options, de prérequis et de toxicités. Il peut aussi attribuer une AMM ou un remboursement inexistants en France, et proposer avec assurance sur un cas incomplet. Une option ne vaut que si son indication européenne correspond au cas ; la décision reste la vôtre.</p></div>
+</section>
+
+<!-- ================================================================ EXERCICE 4 -->
+<section id="ex4">
+  <div class="head"><span class="num">4</span><div><h2>Rédiger pour un patient</h2><p class="meta">14 min. Réflexe : formuler seul sa demande, puis adapter sans perdre l’essentiel.</p></div></div>
+  <p class="goal"><strong>À obtenir</strong>Une fiche courte et lisible, fidèle au RCP, qui conserve toutes les consignes d’alerte.</p>
+  <ol class="steps">
+    <li><b>Produire.</b> Rédigez votre propre prompt, sans modèle (3 minutes), puis copiez « mon prompt + profil » dans une nouvelle conversation. Les patients sont ceux de l’exercice 2.</li>
+    <li><b>Contrôler.</b> Relisez comme le patient : rien d’inventé ? Les consignes du RCP sont-elles présentes ?</li>
+    <li><b>Relancer.</b> Envoyez la relance « adaptation » : plus court, plus lisible, sans perdre une consigne d’alerte.</li>
+    <li><b>Conserver.</b> Comparez les deux versions, puis votre prompt au prompt de référence ; gardez la version la plus utile et la plus fidèle.</li>
+  </ol>
+  <label class="field-label" for="ex4-prompt">Mon prompt</label>
+  <textarea id="ex4-prompt" class="mono" data-key="ex4-prompt" placeholder="À vous de rédiger"></textarea>
+
+  <div class="tabs" role="tablist" data-group="ex4"><button role="tab" data-tab="A">A : Mme A.</button><button role="tab" data-tab="B">B : M. B.</button></div>
+  <button class="combo" data-prompt="ex4-prompt" data-group="ex4" data-prefix="Profil et traitement : " data-case-a="c-ex4a" data-case-b="c-ex4b">Copier mon prompt + profil</button>
+
+  <p class="panel-label">Profil A (sénologie)</p>
+  <div class="panel" data-group="ex4" data-panel="A">
+    <figure class="block data"><figcaption>Profil A <button class="copy" data-target="c-ex4a">Copier seul</button></figcaption>
+<pre id="c-ex4a">Mme A., 68 ans, lit peu, garde ses petits-enfants le mercredi, veut partir en Bretagne dans un mois. Débute abémaciclib 150 mg matin et soir + létrozole. Traitements habituels : metformine, atorvastatine, ézétimibe, irbésartan, hydrochlorothiazide, apixaban, vérapamil, ésoméprazole.</pre></figure>
+  </div>
+  <p class="panel-label">Profil B (hématologie)</p>
+  <div class="panel" data-group="ex4" data-panel="B">
+    <figure class="block data"><figcaption>Profil B <button class="copy" data-target="c-ex4b">Copier seul</button></figcaption>
+<pre id="c-ex4b">M. B., 72 ans, vit seul à 40 km, malvoyant, « n’a jamais soif », pilulier préparé par l’infirmière. Débute la titration du vénétoclax (20 mg par jour la première semaine) avec l’obinutuzumab. Traitements habituels : metformine, atorvastatine, ézétimibe, irbésartan, diltiazem, digoxine, ésoméprazole ; diltiazem et digoxine en attente d’un avis cardiologique.</pre></figure>
+  </div>
+
+  <figure class="block"><figcaption>Relance « adaptation » <button class="copy" data-target="p-ex4r">Copier</button></figcaption>
+<pre id="p-ex4r">Réécris cette fiche en 120 mots maximum pour une personne ayant des difficultés de lecture. Conserve toutes les consignes d’alerte présentes dans la source. Signale séparément les informations que tu as supprimées ou reformulées.</pre></figure>
+
+  <details><summary>Prompt de référence <small>après avoir écrit le vôtre</small></summary><div class="inner">
+    <figure class="block"><figcaption>Prompt de référence <button class="copy" data-target="p-ex4ref">Copier</button></figcaption>
+<pre id="p-ex4ref">Rédige une fiche d’information personnalisée pour ce patient, qui débute le traitement indiqué.
+Contraintes :
+- français simple, phrases courtes, gros caractères ;
+- rubriques : à quoi sert le traitement / comment le prendre / ce que vous surveillez (effets indésirables) / quand appeler l’équipe / vos autres médicaments ;
+- appuie-toi sur le RCP européen ; n’ajoute aucune dose ni aucun seuil qui n’y figure pas ;
+- n’invente aucune donnée ni aucun effet indésirable ;
+- termine la fiche par un encart « Coordonnées de l’équipe » à remplir, avec [À COMPLÉTER PAR L’ÉQUIPE] pour le médecin référent, l’infirmière de coordination, le téléphone, les horaires et la conduite à tenir en dehors des horaires ;
+- ne réponds pas à la place de l’équipe aux questions du patient : liste-les.
+Termine, hors fiche, par la liste des points que l’équipe doit valider avant remise.
+Profil et traitement : [COLLER ICI]</pre></figure>
+  </div></details>
+
+  <details><summary>Éléments de correction <small>après votre propre contrôle</small></summary><div class="inner">
+    <p class="panel-label">Mme A.</p>
+    <div class="panel" data-group="ex4" data-panel="A">
+      <ul class="plain">
+        <li>Diarrhée : lopéramide dès les premières selles molles, boire davantage, prévenir l’équipe (RCP Verzenios 4.4).</li>
+        <li>Oubli ou vomissement : prendre la dose suivante à l’heure habituelle, sans dose supplémentaire (4.2).</li>
+        <li>Pas de pamplemousse ; signaler fièvre, frissons, jambe douloureuse et gonflée, douleur thoracique, essoufflement.</li>
+        <li>Personnalisation utile : diurétique, irbésartan et metformine rendent la déshydratation plus dangereuse ; appeler tôt.</li>
+        <li>Pièges : « arrêtez votre diurétique » ou « arrêtez le vérapamil » (décisions non prises), une posologie de lopéramide absente de la source, un effet indésirable inventé, un « oui pour la Bretagne » décidé par le modèle, des coordonnées inventées au lieu de l’encart à compléter.</li>
+      </ul>
+    </div>
+    <p class="panel-label">M. B.</p>
+    <div class="panel" data-group="ex4" data-panel="B">
+      <ul class="plain">
+        <li>Boire 1,5 à 2 L d’eau par jour, dès 2 jours avant et pendant toute la titration (RCP Venclyxto 4.2).</li>
+        <li>Prise le matin pendant la titration, au cours d’un repas, comprimé avalé entier ; oubli : rattraper dans les 8 heures, sinon attendre le lendemain ; après un vomissement, pas de prise supplémentaire (4.2).</li>
+        <li>Ni pamplemousse, ni orange amère, ni carambole ; millepertuis contre-indiqué (4.3, 4.5).</li>
+        <li>Signes de lyse à connaître : fièvre, frissons, nausées, vomissements, confusion, essoufflement, battements irréguliers, urines foncées (4.9).</li>
+        <li>Pièges : diltiazem ou digoxine présentés comme arrêtés, signes de lyse perdus en raccourcissant, coordonnées inventées.</li>
+      </ul>
+    </div>
+  </div></details>
+  <fieldset class="log" data-title="Exercice 4, rédiger pour un patient"><legend>Mon relevé</legend>
+    <label><input type="checkbox" data-key="e4-invente"> Rien d’inventé (numéro, seuil, dose, effet indésirable, décision)</label>
+    <label><input type="checkbox" data-key="e4-alerte"> Consignes d’alerte conservées après adaptation</label>
+    <label><input type="checkbox" data-key="e4-encart"> Encart des coordonnées laissé à compléter</label>
+    <label><input type="checkbox" data-key="e4-utile"> La version adaptée est plus utile</label>
+  </fieldset>
+  <label class="field-label" for="ex4-bilan">Ce que j’ai contrôlé, changé et conservé</label>
+  <textarea id="ex4-bilan" data-key="ex4-bilan" placeholder="J’ai contrôlé : …&#10;J’ai changé : …&#10;Je conserve cette version parce que : …"></textarea>
+  <div class="keep"><h3>À retenir</h3><p>Le modèle adapte remarquablement le registre, la longueur et le destinataire. Il comble aussi les vides avec des détails plausibles et, en raccourcissant, peut perdre une consigne importante. Dites-lui ce qu’il ne doit pas inventer, faites-lui lister ce qu’il a supprimé ; une fiche remise se valide ligne à ligne.</p></div>
+</section>
+
+<!-- ================================================================ TRANSFERT -->
+<section id="transfert">
+  <div class="head plain"><div><h2>Avant de partir</h2><p class="meta">Un prompt que vous avez adapté, une réponse que vous avez contrôlée, une méthode que vous savez reproduire.</p></div></div>
+  <fieldset class="log" data-title="Mes acquis"><legend>Ce que je sais faire</legend>
+    <label><input type="checkbox" data-key="a-demande"> Construire une demande précise</label>
+    <label><input type="checkbox" data-key="a-passage"> Retrouver le passage qui soutient une affirmation</label>
+    <label><input type="checkbox" data-key="a-relance"> Améliorer une réponse par une relance ciblée</label>
+    <label><input type="checkbox" data-key="a-valider"> Reconnaître une réponse que je ne peux pas valider</label>
+  </fieldset>
+  <label class="field-label" for="prompt-perso">Mon prompt personnel, adapté de la soirée</label>
+  <textarea id="prompt-perso" class="mono" data-key="prompt-perso" placeholder="Reprenez le prompt le plus utile de la soirée et adaptez-le à votre pratique."></textarea>
+  <div class="row"><button class="copy" data-target="prompt-perso">Copier mon prompt</button></div>
+  <label class="field-label" for="premiere">Ma première tâche, et le contrôle que je ferai à chaque fois</label>
+  <textarea id="premiere" data-key="premiere" placeholder="Tâche : …&#10;Contrôle obligatoire : …"></textarea>
+  <span class="field-label" id="lab-conf-end">Ma confiance maintenant, de 0 à 10</span>
+  <div class="scale" data-key="conf-end" role="radiogroup" aria-labelledby="lab-conf-end"></div>
+  <p class="compare" id="conf-compare"></p>
+  <div class="actions">
+    <button class="copy" id="copy-recap">Copier mon récapitulatif</button>
+    <button class="ghost" id="clear-notes">Effacer mes notes</button>
+  </div>
+  <p class="compare js-only">Vos notes restent sur cet appareil ; rien n’est envoyé.</p>
+</section>
+
+<!-- ================================================================ RÉFLEXES -->
+<section id="reflexes">
+  <div class="head plain"><div><h2>Les réflexes de la soirée</h2><p class="meta">Les principes de contrôle sont communs ; les capacités et les erreurs varient selon les outils.</p></div></div>
+  <div class="cols">
+    <div><h3>Avant d’envoyer</h3>
+      <ul class="plain">
+        <li>Retirer les identifiants directs et n’utiliser que le nécessaire.</li>
+        <li>Donner la source quand l’exactitude compte.</li>
+        <li>Structurer : tâche, contexte, données, contraintes, format.</li>
+        <li>Régler son outil une fois pour toutes.</li>
+      </ul></div>
+    <div><h3>Avant de réutiliser</h3>
+      <ul class="plain">
+        <li>Retrouver chaque chiffre dans la source.</li>
+        <li>Ouvrir la référence citée.</li>
+        <li>Demander ce qui changerait la décision, pas « est-ce juste ? ».</li>
+        <li>Classer : vérifié, faux ou non vérifié.</li>
+      </ul></div>
+  </div>
+</section>
+
+<!-- ================================================================ BONUS -->
+<section id="bonus">
+  <div class="head plain"><div><h2>Pour aller plus loin</h2><p class="meta">À essayer chez vous.</p></div></div>
+  <h3>Chercher avec des sources</h3>
+  <p>Posez cette question avec la recherche web activée, ouvrez une référence et comparez avec les éléments de correction de l’exercice 1.</p>
+  <figure class="block"><figcaption>Question <button class="copy" data-target="p-web">Copier</button></figcaption>
+<pre id="p-web">Dans l’essai MONARCH 3, la survie globale finale est-elle statistiquement significative ? Donne la publication, sa date, le HR, l’IC 95 % et le lien PubMed. Distingue analyses intermédiaires et analyse finale. Si tu n’es pas sûr, dis-le.</pre></figure>
+  <p class="note">OpenEvidence, souvent cité pour cet usage, n’est plus accessible depuis l’Union européenne depuis fin avril 2026. Le même geste se fait avec votre assistant habituel.</p>
+  <h3>Gemini Notebook (anciennement NotebookLM)</h3>
+  <p>Il répond à partir des seuls documents que vous lui donnez, avec des citations cliquables, et peut en tirer un résumé audio en français.</p>
+  <ol class="steps">
+    <li>Ouvrez <a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> avec un compte Google et créez un notebook.</li>
+    <li>Ajoutez une source par lien, par exemple le RCP européen d’un médicament que vous prescrivez.</li>
+    <li>Posez une question, puis cliquez sur la citation pour lire le passage.</li>
+    <li>Dans Studio, lancez un résumé audio en français : une phrase entendue se vérifie dans la source.</li>
+  </ol>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <p>Formation RP IA. Cas fictifs, à visée pédagogique uniquement.</p>
+  <p>RCP consultés en septembre 2026 : vérifiez la version en vigueur avant tout usage clinique.</p>
+</div></footer>
+
+<script>
+(function () {
+  document.documentElement.className = document.documentElement.className.replace("no-js", "js");
+  var PREFIX = "rpia:";
+  var store = {
+    get: function (k) { try { return window.localStorage.getItem(PREFIX + k); } catch (e) { return null; } },
+    set: function (k, v) { try { window.localStorage.setItem(PREFIX + k, v); } catch (e) {} },
+    clear: function () {
+      try {
+        var keys = [];
+        for (var i = 0; i < window.localStorage.length; i++) { var k = window.localStorage.key(i); if (k && k.indexOf(PREFIX) === 0) keys.push(k); }
+        keys.forEach(function (k) { window.localStorage.removeItem(k); });
+      } catch (e) {}
+    }
+  };
+
+  function selectNode(el) {
+    try {
+      if (el.tagName === "TEXTAREA") { el.focus(); el.select(); return; }
+      var r = document.createRange(); r.selectNodeContents(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    } catch (e) {}
+  }
+
+  function asHtml(text) {
+    var safe = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return "<div>" + safe.split("\n").join("<br>") + "</div>";
+  }
+
+  function copyText(text, btn, sourceEl) {
+    function feedback(ok, msg) {
+      if (!btn) return;
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      btn.textContent = msg || (ok ? "Copié" : "Copie impossible : sélectionnez le texte");
+      btn.classList.toggle("done", ok);
+      if (!ok && sourceEl) selectNode(sourceEl);
+      setTimeout(function () { btn.textContent = btn.dataset.label; btn.classList.remove("done"); }, 2000);
+    }
+    function legacy() {
+      var ok = false;
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", "");
+        ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+      } catch (e) { ok = false; }
+      feedback(ok);
+    }
+    function plain() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { feedback(true); }, legacy);
+      } else { legacy(); }
+    }
+    try {
+      if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+        var item = new window.ClipboardItem({
+          "text/plain": new Blob([text], { type: "text/plain" }),
+          "text/html": new Blob([asHtml(text)], { type: "text/html" })
+        });
+        navigator.clipboard.write([item]).then(function () { feedback(true); }, plain);
+        return;
+      }
+    } catch (e) {}
+    try { plain(); } catch (e) { legacy(); }
+    copyText.feedback = feedback;
+  }
+
+  document.querySelectorAll("button.copy[data-target]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var el = document.getElementById(b.dataset.target);
+      if (!el) return;
+      var t = el.tagName === "TEXTAREA" ? el.value : el.textContent;
+      copyText(t.trim(), b, el);
+    });
+  });
+
+  var current = {};
+  function show(g, id) {
+    current[g] = id;
+    document.querySelectorAll('.tabs[data-group="' + g + '"] [role=tab]').forEach(function (t) {
+      t.setAttribute("aria-selected", t.dataset.tab === id ? "true" : "false");
+    });
+    document.querySelectorAll('.panel[data-group="' + g + '"]').forEach(function (p) { p.hidden = p.dataset.panel !== id; });
+    store.set("tab:" + g, id);
+  }
+  var groups = [];
+  document.querySelectorAll(".tabs").forEach(function (tabs) {
+    var g = tabs.dataset.group;
+    groups.push(g);
+    tabs.querySelectorAll("[role=tab]").forEach(function (t) { t.addEventListener("click", function () { show(g, t.dataset.tab); }); });
+  });
+  var speButtons = document.querySelectorAll(".spe [data-spe]");
+  function setSpe(id) {
+    store.set("spe", id);
+    speButtons.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.spe === id ? "true" : "false"); });
+    groups.forEach(function (g) { show(g, id); });
+  }
+  speButtons.forEach(function (b) { b.addEventListener("click", function () { setSpe(b.dataset.spe); }); });
+  var spe = store.get("spe");
+  speButtons.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.spe === spe ? "true" : "false"); });
+  groups.forEach(function (g) { show(g, store.get("tab:" + g) || spe || "A"); });
+
+  document.querySelectorAll("button.combo").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var g = b.dataset.group, cur = current[g] || "A";
+      var caseEl = document.getElementById(cur === "A" ? b.dataset.caseA : b.dataset.caseB);
+      var caseTxt = caseEl ? caseEl.textContent.trim() : "";
+      var pid = b.dataset.promptA ? (cur === "A" ? b.dataset.promptA : b.dataset.promptB) : b.dataset.prompt;
+      var pEl = document.getElementById(pid);
+      var p = (pEl.tagName === "TEXTAREA" ? pEl.value : pEl.textContent).trim();
+      if (!p) {
+        if (!b.dataset.label) b.dataset.label = b.textContent;
+        b.textContent = "Écrivez d’abord votre prompt";
+        setTimeout(function () { b.textContent = b.dataset.label; }, 2000);
+        return;
+      }
+      var out;
+      if (b.dataset.slot && p.indexOf(b.dataset.slot) >= 0) { out = p.replace(b.dataset.slot, caseTxt); }
+      else { out = p + "\n\n" + (b.dataset.prefix || "") + caseTxt; }
+      copyText(out, b, null);
+    });
+  });
+
+  document.querySelectorAll("input[type=checkbox][data-key]").forEach(function (c) {
+    c.checked = store.get(c.dataset.key) === "1";
+    c.addEventListener("change", function () { store.set(c.dataset.key, c.checked ? "1" : "0"); });
+  });
+
+  document.querySelectorAll("textarea[data-key]").forEach(function (t) {
+    var v = store.get(t.dataset.key);
+    if (v !== null) t.value = v;
+    t.addEventListener("input", function () { store.set(t.dataset.key, t.value); });
+  });
+
+  function updateConf() {
+    var o = document.getElementById("conf-compare");
+    if (!o) return;
+    var a = store.get("conf-start"), b = store.get("conf-end");
+    if (a === null && b === null) { o.textContent = "Notez votre confiance à l’accueil et ici pour mesurer l’écart."; return; }
+    o.textContent = "À l’accueil : " + (a === null ? "non notée" : a + "/10") + ". Maintenant : " + (b === null ? "non notée" : b + "/10") + ".";
+  }
+
+  document.querySelectorAll(".scale[data-key]").forEach(function (sc) {
+    var k = sc.dataset.key, cur = store.get(k);
+    for (var i = 0; i <= 10; i++) {
+      (function (val) {
+        var lab = document.createElement("label");
+        var inp = document.createElement("input");
+        inp.type = "radio"; inp.name = k; inp.value = String(val);
+        inp.setAttribute("aria-label", val + " sur 10");
+        if (cur === String(val)) inp.checked = true;
+        inp.addEventListener("change", function () { store.set(k, inp.value); updateConf(); });
+        var sp = document.createElement("span"); sp.textContent = String(val);
+        lab.appendChild(inp); lab.appendChild(sp); sc.appendChild(lab);
+      })(i);
+    }
+  });
+  updateConf();
+
+  function recap() {
+    var L = ["Carnet de pratique RP IA : mon récapitulatif", ""];
+    var a = store.get("conf-start"), b = store.get("conf-end");
+    L.push("Confiance : " + (a === null ? "?" : a) + "/10 à l’accueil, " + (b === null ? "?" : b) + "/10 à la fin.", "");
+    document.querySelectorAll("fieldset.log").forEach(function (fs) {
+      var got = [];
+      fs.querySelectorAll("input:checked").forEach(function (i) { got.push("- " + i.parentElement.textContent.trim()); });
+      L.push(fs.dataset.title + " :");
+      L.push.apply(L, got.length ? got : ["- rien de coché"]);
+      L.push("");
+    });
+    [["ex1-bilan", "Exercice 1, ce que j’ai contrôlé, changé et conservé"], ["ex2-bilan", "Exercice 2, ce que j’ai contrôlé, changé et conservé"],
+     ["ex3-bilan", "Exercice 3, ce que j’ai contrôlé, changé et conservé"],
+     ["ex4-prompt", "Mon prompt (exercice 4)"], ["ex4-bilan", "Exercice 4, ce que j’ai contrôlé, changé et conservé"],
+     ["prompt-perso", "Mon prompt personnel"], ["premiere", "Ma première tâche et mon contrôle"]].forEach(function (p) {
+      var el = document.getElementById(p[0]);
+      if (el && el.value.trim()) { L.push(p[1] + " :", el.value.trim(), ""); }
+    });
+    L.push("Instruction de réglage :", document.getElementById("p-instr").textContent.trim(), "");
+    L.push("Les réflexes :");
+    document.querySelectorAll("#reflexes li").forEach(function (li) { L.push("- " + li.textContent.trim()); });
+    return L.join("\n");
+  }
+
+  var rb = document.getElementById("copy-recap");
+  if (rb) rb.addEventListener("click", function () { copyText(recap(), rb, null); });
+
+  var cb = document.getElementById("clear-notes");
+  if (cb) cb.addEventListener("click", function () {
+    if (!window.confirm("Effacer toutes vos notes de ce carnet sur cet appareil ?")) return;
+    store.clear();
+    window.location.reload();
+  });
+})();
+</script>
+</body>
+</html>
