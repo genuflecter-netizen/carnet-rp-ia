@@ -117,9 +117,10 @@ textarea.mono{font-family:var(--mono);font-size:14.5px;min-height:11rem}
 button.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:.55rem 1.1rem;min-height:44px;font-weight:700;cursor:pointer}
 footer{color:var(--muted);font-size:.92rem;padding:1.6rem 0 3rem;border-top:1px solid var(--line)}
 footer p{margin:.35rem 0}
+.print-only{display:none}
 .no-js .tabs,.no-js .spe,.no-js button.copy,.no-js button.combo,.no-js .scale,.no-js .actions,.no-js .js-only{display:none}
 [hidden]{display:none!important}
-@media print{.nav,.tabs,.spe,button,.scale,.actions{display:none!important}.panel[hidden]{display:block!important}details{border:1px solid #999}figure.block{background:#fff!important;color:#000!important;border:1px solid #999}figure.block figcaption{color:#333!important}}
+@media print{.web-only{display:none!important}.print-only{display:inline!important}.nav,.tabs,.spe,button,.scale,.actions{display:none!important}.panel[hidden]{display:block!important}details{border:1px solid #999}figure.block{background:#fff!important;color:#000!important;border:1px solid #999}figure.block figcaption{color:#333!important}}
 @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
 </style>
 </head>
@@ -152,7 +153,7 @@ footer p{margin:.35rem 0}
   <ol class="steps">
     <li>Ouvrez votre outil habituel (ChatGPT, Claude, Gemini, Le Chat…) et démarrez une nouvelle conversation.</li>
     <li>Copiez la question ci-dessous et envoyez-la sans la modifier. Gardez la réponse pour 20h45.</li>
-    <li>Choisissez votre spécialité en haut de page et notez votre confiance actuelle.</li>
+    <li><span class="web-only">Choisissez votre spécialité en haut de page et notez votre confiance actuelle.</span><span class="print-only">Notez votre confiance actuelle, de 0 à 10.</span></li>
   </ol>
   <figure class="block"><figcaption>Question de l’accueil <button class="copy" data-target="p-q0">Copier</button></figcaption>
 <pre id="p-q0">Qui a reçu le prix Nobel de physiologie ou médecine le plus récent, et pour quelle découverte ? Réponds en une phrase.</pre></figure>
@@ -197,6 +198,7 @@ footer p{margin:.35rem 0}
 - n’invente ni référence, ni dose, ni chiffre ;
 - termine par les points à contrôler avant utilisation ;
 - si je conteste ta réponse, réexamine-la à partir des données disponibles, justifie toute correction et signale ce qui reste incertain.</pre></figure>
+  <p class="note">Ces consignes orientent les réponses ; vérifiez qu’elles sont effectivement suivies.</p>
   <p class="note">Sans compte, les réglages ne sont pas disponibles : collez cette instruction au début de chaque nouvelle conversation.</p>
 </section>
 
@@ -205,8 +207,8 @@ footer p{margin:.35rem 0}
   <div class="head"><span class="num">1</span><div><h2>Exploiter un article</h2><p class="meta">13 min. Réflexe : partir de l’article source, puis rattacher chaque chiffre et chaque actualisation à une référence vérifiable.</p></div></div>
   <p class="goal"><strong>À obtenir</strong>Une analyse critique de l’essai et une slide dont chaque chiffre et chaque actualisation renvoient à une référence vérifiable.</p>
   <ol class="steps">
-    <li><b>Produire.</b> Nouvelle conversation, recherche web activée si votre outil le propose. Copiez « prompt + article » et envoyez.</li>
-    <li><b>Contrôler.</b> Comparez les chiffres du résumé à ceux du résumé PubMed, vérifiez que chaque actualisation citée existe (revue ou congrès, année), relisez l’applicabilité en France.</li>
+    <li><b>Produire.</b> Nouvelle conversation, recherche web activée si votre outil le propose. <span class="web-only">Copiez « prompt + article » et envoyez.</span><span class="print-only">Copiez le prompt de votre cas, remplacez [LIEN PUBMED] par l’article, puis envoyez.</span></li>
+    <li><b>Contrôler.</b> Regardez ce que le modèle dit avoir consulté (texte intégral, résumé ou rien), comparez les chiffres du résumé à ceux du résumé PubMed, vérifiez que chaque actualisation citée existe (revue ou congrès, année), relisez l’applicabilité en France.</li>
     <li><b>Relancer.</b> Envoyez la relance « références ». Sur téléphone, si le fichier ne s’ouvre pas, demandez le contenu de la slide.</li>
     <li><b>Conserver.</b> Gardez la slide corrigée et notez ce que vous avez changé.</li>
   </ol>
@@ -224,6 +226,7 @@ footer p{margin:.35rem 0}
 - les biais possibles ;
 - l’applicabilité en France (AMM, remboursement, accès précoce) ;
 - la prise en compte des actualisations publiées ou présentées en congrès après la 1re publication.
+Précise si tu as consulté le texte intégral, seulement le résumé ou aucune de ces sources. Limite ton analyse à ce que tu as effectivement pu consulter.
 Résume ensuite ta réponse en une slide PowerPoint.
 Article : [LIEN PUBMED]</pre></figure>
     <figure class="block data"><figcaption>Article A <button class="copy" data-target="a-ex1a">Copier seul</button></figcaption>
@@ -239,6 +242,7 @@ Article : [LIEN PUBMED]</pre></figure>
 - les biais possibles ;
 - l’applicabilité en France (AMM, remboursement, accès précoce) ;
 - la prise en compte des actualisations publiées ou présentées en congrès après la 1re publication.
+Précise si tu as consulté le texte intégral, seulement le résumé ou aucune de ces sources. Limite ton analyse à ce que tu as effectivement pu consulter.
 Résume ensuite ta réponse en une slide PowerPoint.
 Article : [LIEN PUBMED]</pre></figure>
     <figure class="block data"><figcaption>Article B <button class="copy" data-target="a-ex1b">Copier seul</button></figcaption>
@@ -246,7 +250,7 @@ Article : [LIEN PUBMED]</pre></figure>
   </div>
 
   <figure class="block"><figcaption>Relance « références » <button class="copy" data-target="p-ex1r">Copier</button></figcaption>
-<pre id="p-ex1r">Pour chaque chiffre et chaque actualisation citée, donne la référence exacte (revue ou congrès, année) et le lien. Signale clairement ce que tu n’as pas pu vérifier.</pre></figure>
+<pre id="p-ex1r">Pour chaque chiffre et chaque actualisation citée, donne la référence exacte (revue ou congrès, année) et le lien. Signale clairement ce que tu n’as pas pu vérifier. Génère la diapositive de résumé si tu ne l’as pas générée lors de la réponse précédente.</pre></figure>
   <figure class="block"><figcaption>Relance « France » <button class="copy" data-target="p-ex1f">Copier</button></figcaption>
 <pre id="p-ex1f">Pour l’applicabilité en France, indique la source consultée (RCP, avis de la HAS, base de données publique des médicaments) et sa date. Sinon, écris « non vérifié ».</pre></figure>
   <figure class="block"><figcaption>Sur téléphone, si le fichier ne s’ouvre pas <button class="copy" data-target="p-ex1t">Copier</button></figcaption>
@@ -274,22 +278,23 @@ Article : [LIEN PUBMED]</pre></figure>
     <p>Pièges fréquents à chercher : une actualisation inventée ou mal datée, une analyse intermédiaire présentée comme finale, un statut de remboursement affirmé sans source, une slide qui annonce un gain de survie globale.</p>
   </div></details>
   <fieldset class="log" data-title="Exercice 1, exploiter un article"><legend>Mon relevé</legend>
+    <label><input type="checkbox" data-key="e1-consulte"> Le modèle a précisé ce qu’il a réellement consulté</label>
     <label><input type="checkbox" data-key="e1-pubmed"> Les chiffres du résumé sont conformes au résumé PubMed</label>
     <label><input type="checkbox" data-key="e1-actu"> Une actualisation citée est introuvable ou mal datée</label>
     <label><input type="checkbox" data-key="e1-france"> Le statut français est affirmé sans source</label>
     <label><input type="checkbox" data-key="e1-pptx"> J’ai obtenu la slide .pptx</label>
   </fieldset>
-  <label class="field-label" for="ex1-bilan">Ce que j’ai contrôlé, changé et conservé</label>
-  <textarea id="ex1-bilan" data-key="ex1-bilan" placeholder="J’ai contrôlé : …&#10;J’ai changé : …&#10;Je conserve cette version parce que : …"></textarea>
+  <label class="field-label" for="ex1-bilan">Mon bilan : affirmation, source, décision</label>
+  <textarea id="ex1-bilan" data-key="ex1-bilan" placeholder="Affirmation contrôlée : …&#10;Source et passage retrouvés : …&#10;Décision : je conserve / je corrige / je classe comme non vérifié, parce que…"></textarea>
   <div class="keep"><h3>À retenir</h3><p>Le modèle résume un article et structure une analyse critique en une minute, avec une slide exploitable. Il peut aussi inventer ou mal dater une actualisation, et affirmer un statut français sans source. Un chiffre dont on ne retrouve pas la référence ne va pas sur la slide.</p></div>
 </section>
 
 <!-- ================================================================ EXERCICE 2 -->
 <section id="ex2">
   <div class="head"><span class="num">2</span><div><h2>Vérifier une interaction</h2><p class="meta">14 min. Réflexe : commencer par les interactions majeures, les faire justifier, puis les classer vérifiées, fausses ou non vérifiées.</p></div></div>
-  <p class="goal"><strong>À obtenir</strong>Une interaction majeure que vous avez vous-même vérifiée et corrigée, avec sa source.</p>
+  <p class="goal"><strong>À obtenir</strong>Une interaction cliniquement pertinente, vérifiée, avec une conduite à tenir justifiée.</p>
   <ol class="steps">
-    <li><b>Produire.</b> Nouvelle conversation. Copiez « prompt + cas » et envoyez.</li>
+    <li><b>Produire.</b> Nouvelle conversation. <span class="web-only">Copiez « prompt + cas » et envoyez</span><span class="print-only">Copiez le prompt, remplacez [COLLER ICI] par le cas, puis envoyez</span>.</li>
     <li><b>Contrôler.</b> Choisissez une ligne classée majeure (à défaut, la plus grave) et cherchez-la dans le RCP (liens plus bas).</li>
     <li><b>Relancer.</b> Contestez cette ligne, observez la réaction, puis demandez la justification.</li>
     <li><b>Conserver.</b> Corrigez la ligne : vérifiée, fausse ou non vérifiée, avec la source.</li>
@@ -332,44 +337,61 @@ Traitement habituel : metformine, atorvastatine, ézétimibe, irbésartan, dilti
   <p class="src">RCP européens complets : <a href="https://www.ema.europa.eu/en/documents/product-information/verzenios-epar-product-information_en.pdf" target="_blank" rel="noopener">Verzenios</a>, <a href="https://www.ema.europa.eu/en/documents/product-information/venclyxto-epar-product-information_en.pdf" target="_blank" rel="noopener">Venclyxto</a>, <a href="https://www.ema.europa.eu/en/documents/product-information/gazyvaro-epar-product-information_en.pdf" target="_blank" rel="noopener">Gazyvaro</a> (rubrique 4.5 pour les interactions).</p>
 
   <details><summary>Éléments de correction <small>après votre propre contrôle</small></summary><div class="inner">
-    <p class="panel-label">Cas A</p>
+    <p><strong>Points de vigilance, pour toute ligne majeure</strong></p>
+    <ul class="plain">
+      <li>Mécanisme : quelle voie (CYP3A4, P-gp…) et dans quel sens : qui augmente l’exposition de quoi ?</li>
+      <li>Conduite à tenir : éviter, adapter la dose ou surveiller, et selon quelle source précise ?</li>
+      <li>Autorité : RCP européen (EMA), notice américaine (FDA) ou autre ; les recommandations diffèrent parfois.</li>
+      <li>Contexte : indication du comédicament, fonction rénale, phase du traitement anticancéreux.</li>
+    </ul>
+    <p><strong>Erreurs fréquentes à repérer</strong></p>
+    <ul class="plain">
+      <li>Une interaction affirmée sans passage du RCP, ou transposée d’une autre molécule de la classe.</li>
+      <li>Une interaction importante absente du tableau.</li>
+      <li>Une alternative proposée sans connaître l’indication du comédicament.</li>
+      <li>Un changement d’avis sous la contestation, sans argument nouveau.</li>
+    </ul>
+    <p>Trois statuts pour une ligne : vérifiée (passage du RCP retrouvé), fausse (le RCP dit le contraire), non vérifiée (rien de retrouvé, ce qui ne prouve pas l’absence de risque).</p>
+    <p class="panel-label">Repères tirés du RCP européen, cas A</p>
     <div class="panel" data-group="ex2" data-panel="A">
+      <p><strong>Repères tirés du RCP européen de Verzenios</strong> (à vérifier dans la version en vigueur) :</p>
       <ul class="plain">
-        <li>Vérapamil : inhibiteur modéré du CYP3A4. Le RCP européen de l’abémaciclib ne prévoit pas d’adaptation de dose avec un inhibiteur modéré, mais une surveillance étroite des signes de toxicité (4.5). D’autres notices (Australie, Nouvelle-Zélande) proposent 100 mg deux fois par jour avec le vérapamil : vérifier de quelle autorité vient la recommandation citée.</li>
-        <li>Vigilance clinique : la diarrhée, effet indésirable le plus fréquent, avec diurétique, irbésartan et metformine (déshydratation, insuffisance rénale). RCP 4.4 : lopéramide dès les premières selles molles, boire, prévenir l’équipe.</li>
+        <li>Vérapamil : inhibiteur modéré du CYP3A4 ; rubrique 4.5 : pas d’adaptation de dose avec un inhibiteur modéré, mais surveillance étroite de la toxicité.</li>
+        <li>Diarrhée, effet indésirable le plus fréquent, avec diurétique, irbésartan et metformine : risque de déshydratation et d’insuffisance rénale ; rubrique 4.4 : lopéramide dès les premières selles molles, boire, prévenir l’équipe.</li>
         <li>Créatinine : hausse par inhibition de sa sécrétion tubulaire, sans baisse de la filtration glomérulaire (4.5, 4.8).</li>
-        <li>Transporteurs P-gp et BCRP : le RCP donne la digoxine et le dabigatran comme exemples, pas l’apixaban : non vérifié par ce RCP, à documenter ailleurs.</li>
-        <li>Ésoméprazole, atorvastatine : pas de passage retrouvé dans le RCP de l’abémaciclib, donc alertes non vérifiées. Vérapamil et atorvastatine : interaction entre comédications (CYP3A4), à vérifier par ailleurs.</li>
+        <li>Apixaban : le RCP cite la digoxine et le dabigatran comme exemples de substrats P-gp à marge étroite, pas l’apixaban : non vérifié par ce RCP.</li>
+        <li>Ésoméprazole, atorvastatine : aucun passage retrouvé dans ce RCP : non vérifiés, ce qui ne prouve pas l’absence de risque.</li>
       </ul>
     </div>
-    <p class="panel-label">Cas B</p>
+    <p class="panel-label">Repères tirés des RCP européens, cas B</p>
     <div class="panel" data-group="ex2" data-panel="B">
+      <p><strong>Repères tirés des RCP européens de Venclyxto et Gazyvaro</strong> (à vérifier dans la version en vigueur) :</p>
       <ul class="plain">
-        <li>Diltiazem : inhibiteur modéré du CYP3A cité au RCP. Dans la LLC, à éviter à l’initiation et pendant la titration ; à défaut, dose de vénétoclax réduite d’au moins 50 % (4.2, tableau 7 ; 4.5).</li>
-        <li>Digoxine : substrat de la P-gp à marge thérapeutique étroite, association à éviter, sinon prudence (4.5).</li>
+        <li>Diltiazem : inhibiteur modéré du CYP3A ; Venclyxto 4.2 (tableau 7) et 4.5 : à éviter à l’initiation et pendant la titration, sinon dose réduite d’au moins 50 %.</li>
+        <li>Digoxine : substrat de la P-gp à marge thérapeutique étroite : association à éviter, sinon prudence (4.5).</li>
         <li>Statines : surveiller la toxicité (4.5).</li>
-        <li>Ésoméprazole : le RCP indique que les antisécrétoires n’affectent pas la biodisponibilité du vénétoclax. Ici, l’alerte est vérifiée comme fausse.</li>
-        <li>Obinutuzumab : envisager de suspendre les antihypertenseurs 12 h avant, pendant et 1 h après chaque perfusion (RCP Gazyvaro 4.2).</li>
+        <li>Ésoméprazole : Venclyxto 4.5 indique que les antisécrétoires gastriques ne modifient pas la biodisponibilité du vénétoclax.</li>
+        <li>Obinutuzumab : envisager de suspendre les antihypertenseurs 12 h avant, pendant et 1 h après chaque perfusion (Gazyvaro 4.2).</li>
       </ul>
     </div>
   </div></details>
   <fieldset class="log" data-title="Exercice 2, vérifier une interaction"><legend>Mon relevé</legend>
     <label><input type="checkbox" data-key="e2-majeure"> J’ai vérifié une interaction majeure dans le RCP</label>
-    <label><input type="checkbox" data-key="e2-autorite"> La recommandation citée venait d’une autre autorité que l’EMA</label>
+    <label><input type="checkbox" data-key="e2-autorite"> J’ai identifié l’autorité de la recommandation citée (EMA, FDA…)</label>
     <label><input type="checkbox" data-key="e2-pression"> Le modèle a changé d’avis sans argument nouveau</label>
     <label><input type="checkbox" data-key="e2-nv"> J’ai classé une ligne « non vérifiée »</label>
   </fieldset>
-  <label class="field-label" for="ex2-bilan">Ce que j’ai contrôlé, changé et conservé</label>
-  <textarea id="ex2-bilan" data-key="ex2-bilan" placeholder="J’ai contrôlé : …&#10;J’ai changé : …&#10;Je conserve cette version parce que : …"></textarea>
-  <div class="keep"><h3>À retenir</h3><p>Le modèle connaît beaucoup d’interactions, en ajoute et en oublie, et mélange parfois les notices de différentes autorités. Contesté, il peut changer d’avis sans nouvel argument : c’est une observation, pas une preuve. La source tranche, et ne pas retrouver une interaction ne prouve pas son absence.</p></div>
+  <label class="field-label" for="ex2-bilan">Mon bilan : affirmation, source, décision</label>
+  <textarea id="ex2-bilan" data-key="ex2-bilan" placeholder="Affirmation contrôlée : …&#10;Source et passage retrouvés : …&#10;Décision : je conserve / je corrige / je classe comme non vérifié, parce que…"></textarea>
+  <div class="keep"><h3>À retenir</h3><p>Le modèle connaît beaucoup d’interactions, en ajoute et en oublie, et peut citer une recommandation sans dire d’où elle vient. Contesté, il peut changer d’avis sans nouvel argument : c’est une observation, pas une preuve. Pour chaque ligne majeure : mécanisme, conduite à tenir, source et autorité ; ne pas retrouver une interaction ne prouve pas son absence.</p></div>
 </section>
 
 <!-- ================================================================ EXERCICE 3 -->
 <section id="ex3">
-  <div class="head"><span class="num">3</span><div><h2>Proposition de prise en charge thérapeutique</h2><p class="meta">12 min. Réflexe : vérifier l’indication européenne de l’option retenue et faire lister ce qui manque pour décider.</p></div></div>
+  <div class="head"><span class="num">3</span><div><h2>Proposition de prise en charge thérapeutique</h2><p class="meta">12 min. Réflexe : vérifier séparément la pertinence clinique, l’indication réglementaire et l’accès en France, et faire lister ce qui manque pour décider.</p></div></div>
   <p class="goal"><strong>À obtenir</strong>Une option vérifiée dans le RCP (indication européenne), et la donnée qui manque pour décider.</p>
   <ol class="steps">
-    <li><b>Produire.</b> Nouvelle conversation. Copiez « prompt + cas » et envoyez : vous obtenez un tableau des options par ligne.</li>
+    <li><b>Produire.</b> Nouvelle conversation. <span class="web-only">Copiez « prompt + cas » et envoyez</span><span class="print-only">Copiez le prompt, remplacez [COLLER ICI] par le cas, puis envoyez</span> : vous obtenez un tableau des options par ligne.</li>
     <li><b>Contrôler.</b> Pour l’option A : l’indication européenne correspond-elle au cas ? Une AMM ou un remboursement sont-ils affirmés sans source ? Les données manquantes sont-elles signalées ?</li>
     <li><b>Relancer.</b> Envoyez la relance « manquants », puis la relance « indication ».</li>
     <li><b>Conserver.</b> Gardez une option vérifiée et la question à poser au dossier.</li>
@@ -425,7 +447,7 @@ Cas : [COLLER ICI]</pre></figure>
   <p class="panel-label">Bonus, cas B</p>
   <div class="panel" data-group="ex3" data-panel="B">
     <figure class="block"><figcaption>Bonus : une donnée nouvelle <button class="copy" data-target="p-ex3bb">Copier</button></figcaption>
-<pre id="p-ex3bb">Le caryotype révèle une mutation TP53. Ton option A change-t-elle ?</pre></figure>
+<pre id="p-ex3bb">Le bilan moléculaire par NGS met en évidence une mutation de TP53. Ton option A change-t-elle ?</pre></figure>
   </div>
 
   <details><summary>Éléments de correction <small>après votre propre contrôle</small></summary><div class="inner">
@@ -434,8 +456,8 @@ Cas : [COLLER ICI]</pre></figure>
       <ul class="plain">
         <li>La lésion T11 menaçante passe avant la ligne systémique : examen neurologique, IRM, avis de radiothérapie et de chirurgie ; traitement anti-résorptif après bilan dentaire.</li>
         <li>Rechute sous létrozole : proposer un inhibiteur de l’aromatase avec un inhibiteur de CDK4/6 est un piège ; les options reposent sur un autre partenaire hormonal (fulvestrant).</li>
-        <li>« Depuis 2 ans » tombe sur la frontière de la résistance hormonale primaire ; un inhibiteur de CDK4/6 en adjuvant est une donnée décisive.</li>
-        <li>Données à obtenir : biopsie de la récidive (RH, HER2), PIK3CA, ESR1, BRCA. Si PIK3CA muté, l’indication européenne de l’inavolisib est soumise à des conditions de délai.</li>
+        <li>« Depuis 2 ans » tombe sur la frontière entre résistance hormonale primaire et secondaire, qui oriente le choix du partenaire hormonal.</li>
+        <li>Données à obtenir : biopsie de la récidive (RH, HER2), PIK3CA, ESR1 (ADN circulant), BRCA, statut ménopausique, bilan d’extension. Si PIK3CA muté, l’indication européenne de l’inavolisib est soumise à des conditions de délai.</li>
         <li>Tout « remboursé en France » ou « accès précoce » se vérifie à la source (base de données publique des médicaments, HAS).</li>
       </ul>
     </div>
@@ -453,11 +475,11 @@ Cas : [COLLER ICI]</pre></figure>
     <label><input type="checkbox" data-key="e3-ue"> L’option A correspond à une indication européenne vérifiée</label>
     <label><input type="checkbox" data-key="e3-amm"> Une AMM ou un remboursement affirmés sans source</label>
     <label><input type="checkbox" data-key="e3-manque"> Une donnée manquante décisive signalée</label>
-    <label><input type="checkbox" data-key="e3-bonus"> Le bonus a changé l’option A</label>
+    <label><input type="checkbox" data-key="e3-bonus"> J’ai réévalué l’option A après la nouvelle donnée et compris la justification</label>
   </fieldset>
-  <label class="field-label" for="ex3-bilan">Ce que j’ai contrôlé, changé et conservé</label>
-  <textarea id="ex3-bilan" data-key="ex3-bilan" placeholder="J’ai contrôlé : …&#10;J’ai changé : …&#10;Je conserve cette version parce que : …"></textarea>
-  <div class="keep"><h3>À retenir</h3><p>Le modèle structure vite un tableau d’options, de prérequis et de toxicités. Il peut aussi attribuer une AMM ou un remboursement inexistants en France, et proposer avec assurance sur un cas incomplet. Une option ne vaut que si son indication européenne correspond au cas ; la décision reste la vôtre.</p></div>
+  <label class="field-label" for="ex3-bilan">Mon bilan : affirmation, source, décision</label>
+  <textarea id="ex3-bilan" data-key="ex3-bilan" placeholder="Affirmation contrôlée : …&#10;Source et passage retrouvés : …&#10;Décision : je conserve / je corrige / je classe comme non vérifié, parce que…"></textarea>
+  <div class="keep"><h3>À retenir</h3><p>Le modèle structure vite un tableau d’options, de prérequis et de toxicités. Il peut aussi attribuer une AMM ou un remboursement inexistants en France, et proposer avec assurance sur un cas incomplet. Vérifiez séparément la pertinence clinique, l’indication réglementaire et l’accès en France ; la décision reste la vôtre.</p></div>
 </section>
 
 <!-- ================================================================ EXERCICE 4 -->
@@ -465,7 +487,7 @@ Cas : [COLLER ICI]</pre></figure>
   <div class="head"><span class="num">4</span><div><h2>Rédiger pour un patient</h2><p class="meta">14 min. Réflexe : formuler seul sa demande, puis adapter sans perdre l’essentiel.</p></div></div>
   <p class="goal"><strong>À obtenir</strong>Une fiche courte et lisible, fidèle au RCP, qui conserve toutes les consignes d’alerte.</p>
   <ol class="steps">
-    <li><b>Produire.</b> Rédigez votre propre prompt, sans modèle (3 minutes), puis copiez « mon prompt + profil » dans une nouvelle conversation. Les patients sont ceux de l’exercice 2.</li>
+    <li><b>Produire.</b> Rédigez votre propre prompt, sans modèle (3 minutes), <span class="web-only">puis copiez « mon prompt + profil » dans une nouvelle conversation.</span><span class="print-only">puis envoyez-le avec le profil dans une nouvelle conversation.</span> Les patients sont ceux de l’exercice 2.</li>
     <li><b>Contrôler.</b> Relisez comme le patient : rien d’inventé ? Les consignes du RCP sont-elles présentes ?</li>
     <li><b>Relancer.</b> Envoyez la relance « adaptation » : plus court, plus lisible, sans perdre une consigne d’alerte.</li>
     <li><b>Conserver.</b> Comparez les deux versions, puis votre prompt au prompt de référence ; gardez la version la plus utile et la plus fidèle.</li>
@@ -488,14 +510,14 @@ Cas : [COLLER ICI]</pre></figure>
   </div>
 
   <figure class="block"><figcaption>Relance « adaptation » <button class="copy" data-target="p-ex4r">Copier</button></figcaption>
-<pre id="p-ex4r">Réécris cette fiche en 120 mots maximum pour une personne ayant des difficultés de lecture. Conserve toutes les consignes d’alerte présentes dans la source. Signale séparément les informations que tu as supprimées ou reformulées.</pre></figure>
+<pre id="p-ex4r">Réécris cette fiche pour une personne ayant des difficultés de lecture. Vise 120 mots. Si cette limite oblige à supprimer une consigne indispensable, signale-le et propose une version légèrement plus longue. Conserve toutes les consignes d’alerte. Signale séparément les informations que tu as supprimées ou reformulées.</pre></figure>
 
   <details><summary>Prompt de référence <small>après avoir écrit le vôtre</small></summary><div class="inner">
     <figure class="block"><figcaption>Prompt de référence <button class="copy" data-target="p-ex4ref">Copier</button></figcaption>
 <pre id="p-ex4ref">Rédige une fiche d’information personnalisée pour ce patient, qui débute le traitement indiqué.
 Contraintes :
 - français simple, phrases courtes, gros caractères ;
-- rubriques : à quoi sert le traitement / comment le prendre / ce que vous surveillez (effets indésirables) / quand appeler l’équipe / vos autres médicaments ;
+- rubriques : à quoi sert le traitement / comment le prendre / ce que vous surveillez (effets indésirables) / quand appeler l’équipe ;
 - appuie-toi sur le RCP européen ; n’ajoute aucune dose ni aucun seuil qui n’y figure pas ;
 - n’invente aucune donnée ni aucun effet indésirable ;
 - termine la fiche par un encart « Coordonnées de l’équipe » à remplir, avec [À COMPLÉTER PAR L’ÉQUIPE] pour le médecin référent, l’infirmière de coordination, le téléphone, les horaires et la conduite à tenir en dehors des horaires ;
@@ -532,8 +554,8 @@ Profil et traitement : [COLLER ICI]</pre></figure>
     <label><input type="checkbox" data-key="e4-encart"> Encart des coordonnées laissé à compléter</label>
     <label><input type="checkbox" data-key="e4-utile"> La version adaptée est plus utile</label>
   </fieldset>
-  <label class="field-label" for="ex4-bilan">Ce que j’ai contrôlé, changé et conservé</label>
-  <textarea id="ex4-bilan" data-key="ex4-bilan" placeholder="J’ai contrôlé : …&#10;J’ai changé : …&#10;Je conserve cette version parce que : …"></textarea>
+  <label class="field-label" for="ex4-bilan">Mon bilan : affirmation, source, décision</label>
+  <textarea id="ex4-bilan" data-key="ex4-bilan" placeholder="Affirmation contrôlée : …&#10;Source et passage retrouvés : …&#10;Décision : je conserve / je corrige / je classe comme non vérifié, parce que…"></textarea>
   <div class="keep"><h3>À retenir</h3><p>Le modèle adapte remarquablement le registre, la longueur et le destinataire. Il comble aussi les vides avec des détails plausibles et, en raccourcissant, peut perdre une consigne importante. Dites-lui ce qu’il ne doit pas inventer, faites-lui lister ce qu’il a supprimé ; une fiche remise se valide ligne à ligne.</p></div>
 </section>
 
@@ -589,7 +611,7 @@ Profil et traitement : [COLLER ICI]</pre></figure>
   <p>Posez cette question avec la recherche web activée, ouvrez une référence et comparez avec les éléments de correction de l’exercice 1.</p>
   <figure class="block"><figcaption>Question <button class="copy" data-target="p-web">Copier</button></figcaption>
 <pre id="p-web">Dans l’essai MONARCH 3, la survie globale finale est-elle statistiquement significative ? Donne la publication, sa date, le HR, l’IC 95 % et le lien PubMed. Distingue analyses intermédiaires et analyse finale. Si tu n’es pas sûr, dis-le.</pre></figure>
-  <p class="note">OpenEvidence, souvent cité pour cet usage, n’est plus accessible depuis l’Union européenne depuis fin avril 2026. Le même geste se fait avec votre assistant habituel.</p>
+  <p class="note">OpenEvidence, souvent cité pour cet usage, n’est pas accessible depuis l’Union européenne. Le même geste se fait avec votre assistant habituel.</p>
   <h3>Gemini Notebook (anciennement NotebookLM)</h3>
   <p>Il répond à partir des seuls documents que vous lui donnez, avec des citations cliquables, et peut en tirer un résumé audio en français.</p>
   <ol class="steps">
@@ -779,9 +801,9 @@ Profil et traitement : [COLLER ICI]</pre></figure>
       L.push.apply(L, got.length ? got : ["- rien de coché"]);
       L.push("");
     });
-    [["ex1-bilan", "Exercice 1, ce que j’ai contrôlé, changé et conservé"], ["ex2-bilan", "Exercice 2, ce que j’ai contrôlé, changé et conservé"],
-     ["ex3-bilan", "Exercice 3, ce que j’ai contrôlé, changé et conservé"],
-     ["ex4-prompt", "Mon prompt (exercice 4)"], ["ex4-bilan", "Exercice 4, ce que j’ai contrôlé, changé et conservé"],
+    [["ex1-bilan", "Exercice 1, mon bilan"], ["ex2-bilan", "Exercice 2, mon bilan"],
+     ["ex3-bilan", "Exercice 3, mon bilan"],
+     ["ex4-prompt", "Mon prompt (exercice 4)"], ["ex4-bilan", "Exercice 4, mon bilan"],
      ["prompt-perso", "Mon prompt personnel"], ["premiere", "Ma première tâche et mon contrôle"]].forEach(function (p) {
       var el = document.getElementById(p[0]);
       if (el && el.value.trim()) { L.push(p[1] + " :", el.value.trim(), ""); }
