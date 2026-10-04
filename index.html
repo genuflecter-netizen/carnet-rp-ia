@@ -488,11 +488,11 @@ Cas : [COLLER ICI]</pre></figure>
 <!-- ================================================================ EXERCICE 4 -->
 <section id="ex4">
   <div class="head"><span class="num">4</span><div><h2>Rédiger pour un patient</h2><p class="meta">14 min. Réflexe : formuler seul sa demande, puis adapter sans perdre l’essentiel.</p></div></div>
-  <p class="goal"><strong>À obtenir</strong>Une fiche courte et lisible, fidèle au RCP, qui conserve toutes les consignes d’alerte.</p>
+  <p class="goal"><strong>À obtenir</strong>Une fiche Word courte et lisible, fidèle au RCP, qui conserve toutes les consignes d’alerte.</p>
   <ol class="steps">
     <li><b>Produire.</b> Rédigez votre propre prompt, sans modèle (3 minutes), <span class="web-only">puis copiez « mon prompt + profil » dans une nouvelle conversation.</span><span class="print-only">puis envoyez-le avec le profil dans une nouvelle conversation.</span> Les patients sont ceux de l’exercice 2.</li>
     <li><b>Contrôler.</b> Relisez comme le patient : rien d’inventé ? Les consignes du RCP sont-elles présentes ?</li>
-    <li><b>Relancer.</b> Envoyez la relance « adaptation » : plus court, plus lisible, sans perdre une consigne d’alerte.</li>
+    <li><b>Relancer.</b> Envoyez la relance « adaptation » : plus court, plus lisible, sans perdre une consigne d’alerte, rendu en Word (.docx).</li>
     <li><b>Conserver.</b> Comparez les deux versions, puis votre prompt au prompt de référence ; gardez la version la plus utile et la plus fidèle.</li>
   </ol>
   <label class="field-label" for="ex4-prompt">Mon prompt</label>
@@ -513,7 +513,7 @@ Cas : [COLLER ICI]</pre></figure>
   </div>
 
   <figure class="block"><figcaption>Relance « adaptation » <button class="copy" data-target="p-ex4r">Copier</button></figcaption>
-<pre id="p-ex4r">Réécris cette fiche pour une personne ayant des difficultés de lecture. Vise 120 mots. Si cette limite oblige à supprimer une consigne indispensable, signale-le et propose une version légèrement plus longue. Conserve toutes les consignes d’alerte. Signale séparément les informations que tu as supprimées ou reformulées.</pre></figure>
+<pre id="p-ex4r">Réécris cette fiche pour une personne ayant des difficultés de lecture. Vise 120 mots. Si cette limite oblige à supprimer une consigne indispensable, signale-le et propose une version légèrement plus longue. Conserve toutes les consignes d’alerte. Rends la fiche en document Word (.docx) modifiable et signale séparément, dans ta réponse, les informations que tu as supprimées ou reformulées.</pre></figure>
 
   <details><summary>Prompt de référence <small>après avoir écrit le vôtre</small></summary><div class="inner">
     <figure class="block"><figcaption>Prompt de référence <button class="copy" data-target="p-ex4ref">Copier</button></figcaption>
@@ -524,6 +524,7 @@ Contraintes :
 - appuie-toi sur le RCP européen ; n’ajoute aucune dose ni aucun seuil qui n’y figure pas ;
 - n’invente aucune donnée ni aucun effet indésirable ;
 - termine la fiche par un encart « Coordonnées de l’équipe » à remplir, avec [À COMPLÉTER PAR L’ÉQUIPE] pour le médecin référent, l’infirmière de coordination, le téléphone, les horaires et la conduite à tenir en dehors des horaires ;
+- rends la fiche sous forme de document Word (.docx) modifiable ; si tu ne peux pas créer de fichier, donne le texte prêt à coller dans Word ;
 - ne réponds pas à la place de l’équipe aux questions du patient : liste-les.
 Termine, hors fiche, par la liste des points que l’équipe doit valider avant remise.
 Profil et traitement : [COLLER ICI]</pre></figure>
@@ -555,11 +556,12 @@ Profil et traitement : [COLLER ICI]</pre></figure>
     <label><input type="checkbox" data-key="e4-invente"> Rien d’inventé (numéro, seuil, dose, effet indésirable, décision)</label>
     <label><input type="checkbox" data-key="e4-alerte"> Consignes d’alerte conservées après adaptation</label>
     <label><input type="checkbox" data-key="e4-encart"> Encart des coordonnées laissé à compléter</label>
+    <label><input type="checkbox" data-key="e4-docx"> J’ai obtenu la fiche en Word (.docx) modifiable</label>
     <label><input type="checkbox" data-key="e4-utile"> La version adaptée est plus utile</label>
   </fieldset>
   <label class="field-label" for="ex4-bilan">Mon bilan : affirmation, source, décision</label>
   <textarea id="ex4-bilan" data-key="ex4-bilan" placeholder="Affirmation contrôlée : …&#10;Source et passage retrouvés : …&#10;Décision : je conserve / je corrige / je classe comme non vérifié, parce que…"></textarea>
-  <div class="keep"><h3>À retenir</h3><p>Le modèle adapte remarquablement le registre, la longueur et le destinataire. Il comble aussi les vides avec des détails plausibles et, en raccourcissant, peut perdre une consigne importante. Dites-lui ce qu’il ne doit pas inventer, faites-lui lister ce qu’il a supprimé ; une fiche remise se valide ligne à ligne.</p></div>
+  <div class="keep"><h3>À retenir</h3><p>Le modèle adapte remarquablement le registre, la longueur et le destinataire. Il comble aussi les vides avec des détails plausibles et, en raccourcissant, peut perdre une consigne importante. Dites-lui ce qu’il ne doit pas inventer et dans quel format rendre la fiche (Word modifiable), faites-lui lister ce qu’il a supprimé ; une fiche remise se valide ligne à ligne.</p></div>
 </section>
 
 <!-- ================================================================ TRANSFERT -->
