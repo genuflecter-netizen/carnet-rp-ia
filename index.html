@@ -128,7 +128,7 @@ footer p{margin:.35rem 0}
 
 <nav class="nav" aria-label="Sections du carnet">
   <div class="wrap">
-    <a href="#accueil">Accueil</a><a href="#test">Test</a><a href="#reglage">Réglage</a><a href="#ex1">1 Article</a><a href="#ex2">2 Interaction</a><a href="#ex3">3 Prise en charge</a><a href="#ex4">4 Patient</a><a href="#transfert">Transfert</a><a href="#reflexes">Réflexes</a>
+    <a href="#accueil">Accueil</a><a href="#test">Test</a><a href="#reglage">Réglage</a><a href="#ex1">1 Article</a><a href="#ex2">2 Interaction</a><a href="#ex3">3 Prise en charge</a><a href="#ex4">4 Parcours</a><a href="#transfert">Transfert</a><a href="#reflexes">Réflexes</a>
   </div>
 </nav>
 
@@ -487,81 +487,116 @@ Cas : [COLLER ICI]</pre></figure>
 
 <!-- ================================================================ EXERCICE 4 -->
 <section id="ex4">
-  <div class="head"><span class="num">4</span><div><h2>Rédiger pour un patient</h2><p class="meta">14 min. Réflexe : formuler seul sa demande, puis adapter sans perdre l’essentiel.</p></div></div>
-  <p class="goal"><strong>À obtenir</strong>Une fiche Word courte et lisible, fidèle au RCP, qui conserve toutes les consignes d’alerte.</p>
+  <div class="head"><span class="num">4</span><div><h2>Expliquer au patient son parcours de soins</h2><p class="meta">14 min. Réflexe : fournir le dossier, interdire l’invention, relire comme le patient.</p></div></div>
+  <p class="goal"><strong>À obtenir</strong>Une fiche-infographie A4 modifiable, centrée sur ce patient, qui explique sa situation, ses traitements et son parcours, fidèle au dossier, sans chiffre inventé.</p>
   <ol class="steps">
-    <li><b>Produire.</b> Rédigez votre propre prompt, sans modèle (3 minutes), <span class="web-only">puis copiez « mon prompt + profil » dans une nouvelle conversation.</span><span class="print-only">puis envoyez-le avec le profil dans une nouvelle conversation.</span> Les patients sont ceux de l’exercice 2.</li>
-    <li><b>Contrôler.</b> Relisez comme le patient : rien d’inventé ? Les consignes du RCP sont-elles présentes ?</li>
-    <li><b>Relancer.</b> Envoyez la relance « adaptation » : plus court, plus lisible, sans perdre une consigne d’alerte, rendu en Word (.docx).</li>
-    <li><b>Conserver.</b> Comparez les deux versions, puis votre prompt au prompt de référence ; gardez la version la plus utile et la plus fidèle.</li>
+    <li><b>Produire.</b> Rédigez votre propre prompt, sans modèle (3 minutes), puis <span class="web-only">copiez « mon prompt + dossier » dans une nouvelle conversation.</span><span class="print-only">envoyez-le avec le dossier dans une nouvelle conversation.</span> Les dossiers reprennent les patients de l’exercice 3.</li>
+    <li><b>Contrôler.</b> Comparez au dossier : étapes, frise, traitements, rien d’ajouté. Les effets secondaires des traitements anticancéreux sont-ils présents et conformes au RCP (liens sous le dossier) ? Aucun chiffre, aucune durée, aucune promesse de guérison ?</li>
+    <li><b>Relancer.</b> Envoyez la relance « relecture patient » : la fiche corrigée revient au même format.</li>
+    <li><b>Conserver.</b> Comparez les deux versions, puis votre prompt au prompt de référence ; gardez la version la plus juste.</li>
   </ol>
   <label class="field-label" for="ex4-prompt">Mon prompt</label>
   <textarea id="ex4-prompt" class="mono" data-key="ex4-prompt" placeholder="À vous de rédiger"></textarea>
 
   <div class="tabs" role="tablist" data-group="ex4"><button role="tab" data-tab="A">A : Mme A.</button><button role="tab" data-tab="B">B : M. B.</button></div>
-  <button class="combo" data-prompt="ex4-prompt" data-group="ex4" data-prefix="Profil et traitement : " data-case-a="c-ex4a" data-case-b="c-ex4b">Copier mon prompt + profil</button>
+  <button class="combo" data-prompt="ex4-prompt" data-group="ex4" data-prefix="Dossier : " data-case-a="c-ex4a" data-case-b="c-ex4b">Copier mon prompt + dossier</button>
 
-  <p class="panel-label">Profil A (sénologie)</p>
+  <p class="panel-label">Dossier A (sénologie)</p>
   <div class="panel" data-group="ex4" data-panel="A">
-    <figure class="block data"><figcaption>Profil A <button class="copy" data-target="c-ex4a">Copier seul</button></figcaption>
-<pre id="c-ex4a">Mme A., 68 ans, lit peu, garde ses petits-enfants le mercredi, veut partir en Bretagne dans un mois. Débute abémaciclib 150 mg matin et soir + létrozole. Traitements habituels : metformine, atorvastatine, ézétimibe, irbésartan, hydrochlorothiazide, apixaban, vérapamil, ésoméprazole.</pre></figure>
+    <figure class="block data"><figcaption>Dossier A <button class="copy" data-target="c-ex4a">Copier seul</button></figcaption>
+<pre id="c-ex4a">Mme A., 55 ans, ménopausée, professeure des écoles, deux enfants de 14 et 17 ans.
+Cancer du sein opéré il y a deux ans et demi, puis radiothérapie ; sous létrozole adjuvant depuis 2 ans.
+Récidive osseuse découverte au TEP, avec une lésion de la vertèbre T11 qui menace la moelle épinière. Biopsie : récepteurs hormonaux positifs, HER2 1+, PIK3CA non muté.
+Décision de la RCP : chirurgie de la vertèbre T11 (décompression et stabilisation), puis radiothérapie post-opératoire ; ensuite fulvestrant + abémaciclib ; traitement de protection osseuse après un bilan dentaire.</pre></figure>
+    <p class="src">RCP européens pour vérifier les effets secondaires (rubrique 4.8) : <a href="https://www.ema.europa.eu/en/documents/product-information/verzenios-epar-product-information_en.pdf" target="_blank" rel="noopener">Verzenios</a>, <a href="https://www.ema.europa.eu/en/medicines/human/EPAR/faslodex" target="_blank" rel="noopener">Faslodex</a>.</p>
   </div>
-  <p class="panel-label">Profil B (hématologie)</p>
+  <p class="panel-label">Dossier B (hématologie)</p>
   <div class="panel" data-group="ex4" data-panel="B">
-    <figure class="block data"><figcaption>Profil B <button class="copy" data-target="c-ex4b">Copier seul</button></figcaption>
-<pre id="c-ex4b">M. B., 72 ans, vit seul à 40 km, malvoyant, « n’a jamais soif », pilulier préparé par l’infirmière. Débute la titration du vénétoclax (20 mg par jour la première semaine) avec l’obinutuzumab. Traitements habituels : metformine, atorvastatine, ézétimibe, irbésartan, diltiazem, digoxine, ésoméprazole ; diltiazem et digoxine en attente d’un avis cardiologique.</pre></figure>
+    <figure class="block data"><figcaption>Dossier B <button class="copy" data-target="c-ex4b">Copier seul</button></figcaption>
+<pre id="c-ex4b">M. B., 76 ans, retraité, vit avec son épouse à 30 km de l’hôpital, BPCO sévère, aime jardiner.
+Leucémie aiguë myéloïde nouvellement diagnostiquée, 42 % de blastes dans la moelle, mutation IDH1 R132C ; caryotype normal, pas de mutation de TP53. Chimiothérapie intensive jugée trop risquée.
+Décision de la RCP : azacitidine (injections sous la peau pendant 7 jours, tous les 28 jours) + ivosidénib (comprimés tous les jours), avec des transfusions selon les besoins.</pre></figure>
+    <p class="src">RCP européens pour vérifier les effets secondaires (rubrique 4.8) : <a href="https://www.ema.europa.eu/en/medicines/human/EPAR/vidaza" target="_blank" rel="noopener">Vidaza</a>, <a href="https://www.ema.europa.eu/en/medicines/human/EPAR/tibsovo" target="_blank" rel="noopener">Tibsovo</a>.</p>
   </div>
 
-  <figure class="block"><figcaption>Relance « adaptation » <button class="copy" data-target="p-ex4r">Copier</button></figcaption>
-<pre id="p-ex4r">Réécris cette fiche pour une personne ayant des difficultés de lecture. Vise 120 mots. Si cette limite oblige à supprimer une consigne indispensable, signale-le et propose une version légèrement plus longue. Conserve toutes les consignes d’alerte. Rends la fiche en document Word (.docx) modifiable et signale séparément, dans ta réponse, les informations que tu as supprimées ou reformulées.</pre></figure>
+  <figure class="block"><figcaption>Relance « relecture patient » <button class="copy" data-target="p-ex4r">Copier</button></figcaption>
+<pre id="p-ex4r">Relis cette fiche comme le patient : qu’est-ce qui pourrait l’inquiéter inutilement, lui donner un faux espoir ou rester incompréhensible ? Corrige la fiche, rends-la au même format (PowerPoint .pptx, A4 portrait) et signale séparément, dans ta réponse, ce que tu as modifié.</pre></figure>
 
   <details><summary>Prompt de référence <small>après avoir écrit le vôtre</small></summary><div class="inner">
     <figure class="block"><figcaption>Prompt de référence <button class="copy" data-target="p-ex4ref">Copier</button></figcaption>
-<pre id="p-ex4ref">Rédige une fiche d’information personnalisée pour ce patient, qui débute le traitement indiqué.
-Contraintes :
-- français simple, phrases courtes, gros caractères ;
-- rubriques : à quoi sert le traitement / comment le prendre / ce que vous surveillez (effets indésirables) / quand appeler l’équipe ;
-- appuie-toi sur le RCP européen ; n’ajoute aucune dose ni aucun seuil qui n’y figure pas ;
-- n’invente aucune donnée ni aucun effet indésirable ;
-- termine la fiche par un encart « Coordonnées de l’équipe » à remplir, avec [À COMPLÉTER PAR L’ÉQUIPE] pour le médecin référent, l’infirmière de coordination, le téléphone, les horaires et la conduite à tenir en dehors des horaires ;
-- rends la fiche sous forme de document Word (.docx) modifiable ; si tu ne peux pas créer de fichier, donne le texte prêt à coller dans Word ;
-- ne réponds pas à la place de l’équipe aux questions du patient : liste-les.
-Termine, hors fiche, par la liste des points que l’équipe doit valider avant remise.
-Profil et traitement : [COLLER ICI]</pre></figure>
+<pre id="p-ex4ref">À partir de la synthèse clinique ci-dessous, crée une fiche d’information PERSONNALISÉE destinée au patient.
+
+FORMAT
+- PowerPoint (.pptx) modifiable en format A4 portrait pour impression
+- Une seule page recto
+- style « fiche-infographie médicale » : grand titre, blocs colorés arrondis, pictogrammes quand utiles, phrases courtes, gros caractères, beaucoup d’espace blanc
+- environ 5 à 10 blocs
+
+CONTENU
+Adapte les rubriques au dossier. Privilégie :
+- votre situation ;
+- pourquoi les traitements sont proposés ;
+- en quoi consistent les traitements ;
+- quels bénéfices attendre des traitements (sans données chiffrées, comme « augmentation de l’espérance de vie, maintien du confort de vie, éviter l’apparition de symptômes en lien avec la maladie… ») ;
+- donne impérativement les principaux effets secondaires possibles (uniquement pour les traitements systémiques anticancéreux, pas pour les traitements locaux) ;
+- comment se déroulera le suivi ;
+- quand faut-il consulter rapidement ;
+- ce qu’il faut retenir.
+
+Si plusieurs étapes se succèdent, représente-les sous forme de frise visuelle avec des flèches.
+
+LANGAGE
+Français simple, sans jargon, ton rassurant mais honnête, adapté à une personne sans formation médicale.
+
+CONTRAINTES
+- Appuie-toi sur le dossier.
+- N’invente aucune donnée, traitement, dose, durée, effet indésirable, bénéfice, pronostic ou chiffre de survie.
+- Les pictogrammes doivent aider à comprendre sans ajouter d’information médicale.
+
+La fiche doit être centrée sur CE patient et son parcours, et non être une fiche générique sur la maladie ou les médicaments.
+
+HORS DOCUMENT
+Termine par :
+« Points à valider par l’équipe avant remise au patient ».
+
+Synthèse clinique : [COLLER ICI]</pre></figure>
   </div></details>
 
   <details><summary>Éléments de correction <small>après votre propre contrôle</small></summary><div class="inner">
     <p class="panel-label">Mme A.</p>
     <div class="panel" data-group="ex4" data-panel="A">
       <ul class="plain">
-        <li>Diarrhée : lopéramide dès les premières selles molles, boire davantage, prévenir l’équipe (RCP Verzenios 4.4).</li>
-        <li>Oubli ou vomissement : prendre la dose suivante à l’heure habituelle, sans dose supplémentaire (4.2).</li>
-        <li>Pas de pamplemousse ; signaler fièvre, frissons, jambe douloureuse et gonflée, douleur thoracique, essoufflement.</li>
-        <li>Personnalisation utile : diurétique, irbésartan et metformine rendent la déshydratation plus dangereuse ; appeler tôt.</li>
-        <li>Pièges : « arrêtez votre diurétique » ou « arrêtez le vérapamil » (décisions non prises), une posologie de lopéramide absente de la source, un effet indésirable inventé, un « oui pour la Bretagne » décidé par le modèle, des coordonnées inventées au lieu de l’encart à compléter.</li>
+        <li>Situation : la maladie est revenue dans l’os (situation métastatique). Le traitement vise à la contrôler durablement et à préserver la qualité de vie ; la fiche ne promet pas de guérison et ne donne aucun chiffre.</li>
+        <li>Pourquoi et en quoi consistent les traitements : chirurgie de T11 pour protéger la moelle épinière et stabiliser la colonne ; radiothérapie pour consolider ; fulvestrant (injections) + abémaciclib (comprimés) pour freiner la maladie ; protection osseuse après bilan dentaire. La frise suit cet ordre.</li>
+        <li>Le létrozole n’est pas repris : la maladie a progressé sous ce traitement. Une fiche qui le cite comme traitement à venir est fausse.</li>
+        <li>Effets secondaires à citer (traitements anticancéreux seulement, RCP 4.8) : abémaciclib, diarrhée (lopéramide dès les premières selles molles, boire, prévenir l’équipe), baisse des globules blancs, fatigue, nausées ; fulvestrant, réaction au point d’injection, bouffées de chaleur.</li>
+        <li>Consulter rapidement : faiblesse ou douleur des jambes, troubles urinaires, diarrhée persistante, fièvre.</li>
+        <li>Pièges : chiffres ou durée de traitement, effets de la chirurgie ou de la radiothérapie listés alors que le prompt les exclut, numéros de téléphone inventés.</li>
       </ul>
     </div>
     <p class="panel-label">M. B.</p>
     <div class="panel" data-group="ex4" data-panel="B">
       <ul class="plain">
-        <li>Boire 1,5 à 2 L d’eau par jour, dès 2 jours avant et pendant toute la titration (RCP Venclyxto 4.2).</li>
-        <li>Prise le matin pendant la titration, au cours d’un repas, comprimé avalé entier ; oubli : rattraper dans les 8 heures, sinon attendre le lendemain ; après un vomissement, pas de prise supplémentaire (4.2).</li>
-        <li>Ni pamplemousse, ni orange amère, ni carambole ; millepertuis contre-indiqué (4.3, 4.5).</li>
-        <li>Signes de lyse à connaître : fièvre, frissons, nausées, vomissements, confusion, essoufflement, battements irréguliers, urines foncées (4.9).</li>
-        <li>Pièges : diltiazem ou digoxine présentés comme arrêtés, signes de lyse perdus en raccourcissant, coordonnées inventées.</li>
+        <li>Situation : leucémie aiguë myéloïde. Le traitement, non intensif et adapté à l’âge et à la BPCO, vise la rémission ou le contrôle de la maladie ; la fiche ne promet pas de guérison et ne donne aucun chiffre.</li>
+        <li>Pourquoi et en quoi consistent les traitements : azacitidine + ivosidénib, ce dernier ciblant la mutation IDH1 de la leucémie ; association autorisée en Europe pour les patients qui ne peuvent pas recevoir une chimiothérapie intensive. Frise : cures de 28 jours, azacitidine 7 jours en injections sous la peau, ivosidénib en comprimés chaque jour.</li>
+        <li>Suivi : transfusions selon les besoins, prises de sang, ECG et contrôle de la moelle.</li>
+        <li>Effets secondaires à citer (RCP 4.8) : azacitidine, baisse des globules (infections, saignements, besoin de transfusions), nausées, réaction au point d’injection ; ivosidénib, syndrome de différenciation, allongement du QT surveillé par ECG, nausées, diarrhée.</li>
+        <li>Consulter rapidement : fièvre ou infection, essoufflement, prise de poids rapide ou gonflements (syndrome de différenciation), saignements, malaise ou palpitations ; aucun nouveau médicament sans avis de l’équipe.</li>
+        <li>Pièges : espérance de vie chiffrée, syndrome de différenciation absent, numéros de téléphone inventés.</li>
       </ul>
     </div>
+    <p>Le document accompagne la consultation d’annonce, il ne la remplace pas.</p>
   </div></details>
-  <fieldset class="log" data-title="Exercice 4, rédiger pour un patient"><legend>Mon relevé</legend>
-    <label><input type="checkbox" data-key="e4-invente"> Rien d’inventé (numéro, seuil, dose, effet indésirable, décision)</label>
-    <label><input type="checkbox" data-key="e4-alerte"> Consignes d’alerte conservées après adaptation</label>
-    <label><input type="checkbox" data-key="e4-encart"> Encart des coordonnées laissé à compléter</label>
-    <label><input type="checkbox" data-key="e4-docx"> J’ai obtenu la fiche en Word (.docx) modifiable</label>
-    <label><input type="checkbox" data-key="e4-utile"> La version adaptée est plus utile</label>
+  <fieldset class="log" data-title="Exercice 4, expliquer le parcours de soins"><legend>Mon relevé</legend>
+    <label><input type="checkbox" data-key="e4-dossier"> Fidèle au dossier (étapes, frise, traitements)</label>
+    <label><input type="checkbox" data-key="e4-effets"> Effets secondaires des traitements anticancéreux conformes au RCP</label>
+    <label><input type="checkbox" data-key="e4-chiffres"> Aucun chiffre, aucune durée, aucune promesse de guérison</label>
+    <label><input type="checkbox" data-key="e4-docx"> J’ai obtenu la fiche en PowerPoint A4 modifiable</label>
+    <label><input type="checkbox" data-key="e4-relu"> La version relue est plus juste</label>
   </fieldset>
   <label class="field-label" for="ex4-bilan">Mon bilan : affirmation, source, décision</label>
   <textarea id="ex4-bilan" data-key="ex4-bilan" placeholder="Affirmation contrôlée : …&#10;Source et passage retrouvés : …&#10;Décision : je conserve / je corrige / je classe comme non vérifié, parce que…"></textarea>
-  <div class="keep"><h3>À retenir</h3><p>Le modèle adapte remarquablement le registre, la longueur et le destinataire. Il comble aussi les vides avec des détails plausibles et, en raccourcissant, peut perdre une consigne importante. Dites-lui ce qu’il ne doit pas inventer et dans quel format rendre la fiche (Word modifiable), faites-lui lister ce qu’il a supprimé ; une fiche remise se valide ligne à ligne.</p></div>
+  <div class="keep"><h3>À retenir</h3><p>Le modèle explique simplement une situation complexe et met en page une fiche visuelle, avec la frise du parcours. Il peut aussi inventer une durée, un chiffre ou un traitement, et rassurer à tort ou alarmer inutilement. Fournissez le dossier, interdisez les chiffres non fournis, précisez le format (fiche A4 modifiable), vérifiez les effets secondaires dans le RCP et relisez comme le patient : le document accompagne la consultation d’annonce, il ne la remplace pas.</p></div>
 </section>
 
 <!-- ================================================================ TRANSFERT -->
